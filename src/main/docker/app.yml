@@ -5,18 +5,18 @@ services:
     image: larissshopassistant
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
-      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - SPRING_PROFILES_ACTIVE=dev,api-docs
       - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgresql:5432/larissShopAssistant
       - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgresql:5432/larissShopAssistant
     ports:
-      - 127.0.0.1:8080:8080
+      - 127.0.0.1:8081:8081
     healthcheck:
       test:
         - CMD
         - curl
         - -f
-        - http://localhost:8080/management/health
+        - http://localhost:8081/management/health
       interval: 5s
       timeout: 5s
       retries: 40
