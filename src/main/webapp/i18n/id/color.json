@@ -1,0 +1,11 @@
+{
+  "larissShopAssistantApp": {
+    "Color": {
+      "null": "",
+      "MIDNIGHT": "Midnight",
+      "SPACE_GREY": "Space Grey",
+      "SLIVER": "Silver",
+      "STARLIGHT": "Starlight"
+    }
+  }
+}

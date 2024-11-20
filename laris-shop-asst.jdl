@@ -1,0 +1,50 @@
+
+entity Category {
+  name String required
+}
+
+entity Product {
+  name String required
+  sku String required
+  price BigDecimal required
+  currency String required
+  color Color required
+  processor Processor required
+  memory Memory required
+  storage Storage required
+  description String
+  feature String
+  boxContents String
+  warranty String
+}
+
+enum Color {
+  MIDNIGHT (Midnight),
+  SPACE_GREY ("Space Grey"),
+  SLIVER (Silver),
+  STARLIGHT (Starlight)
+}
+
+enum Processor {
+  APPLE_M2_CHIP ("Apple M2 Chip (CPU 8-Core GPU 8-Core)"),
+  APPLE_M3_CHIP_GPU_8_CORE ("Apple M3 Chip (CPU 8-Core GPU 8-Core)"),
+  APPLE_M3_CHIP_GPU_10_CORE ("Apple M3 Chip (CPU 8-Core GPU 10-Core)")
+}
+
+enum Memory {
+  GB_16 ("16 GB"),
+  GB_24 ("24 GB")
+}
+
+enum Storage {
+  GB_256 ("256 GB"),
+  GB_512 ("512 GB")
+}
+
+relationship OneToMany {
+  Category to Product{category(name)}
+}
+
+dto * with mapstruct
+paginate * with pagination
+service * with serviceImpl

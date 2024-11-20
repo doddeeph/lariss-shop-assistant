@@ -1,0 +1,82 @@
+{
+  "annotations": {
+    "changelogDate": "20241120004849"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sku",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "currency",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "color",
+      "fieldType": "Color",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "MIDNIGHT (Midnight),SPACE_GREY (Space Grey),SLIVER (Silver),STARLIGHT (Starlight)"
+    },
+    {
+      "fieldName": "processor",
+      "fieldType": "Processor",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "APPLE_M2_CHIP (Apple M2 Chip (CPU 8-Core GPU 8-Core)),APPLE_M3_CHIP_GPU_8_CORE (Apple M3 Chip (CPU 8-Core GPU 8-Core)),APPLE_M3_CHIP_GPU_10_CORE (Apple M3 Chip (CPU 8-Core GPU 10-Core))"
+    },
+    {
+      "fieldName": "memory",
+      "fieldType": "Memory",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "GB_16 (16 GB),GB_24 (24 GB)"
+    },
+    {
+      "fieldName": "storage",
+      "fieldType": "Storage",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "GB_256 (256 GB),GB_512 (512 GB)"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "feature",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "boxContents",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "warranty",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Product",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "category",
+      "relationshipName": "category",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}
