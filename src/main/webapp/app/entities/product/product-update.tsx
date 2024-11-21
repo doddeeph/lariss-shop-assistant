@@ -7,6 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities as getCategories } from 'app/entities/category/category.reducer';
+import { getEntities as getDescriptions } from 'app/entities/description/description.reducer';
+import { getEntities as getFeatures } from 'app/entities/feature/feature.reducer';
+import { getEntities as getBoxContents } from 'app/entities/box-content/box-content.reducer';
+import { getEntities as getWarranties } from 'app/entities/warranty/warranty.reducer';
+import { DiscountType } from 'app/shared/model/enumerations/discount-type.model';
+import { Currency } from 'app/shared/model/enumerations/currency.model';
 import { Color } from 'app/shared/model/enumerations/color.model';
 import { Processor } from 'app/shared/model/enumerations/processor.model';
 import { Memory } from 'app/shared/model/enumerations/memory.model';
@@ -22,10 +28,16 @@ export const ProductUpdate = () => {
   const isNew = id === undefined;
 
   const categories = useAppSelector(state => state.category.entities);
+  const descriptions = useAppSelector(state => state.description.entities);
+  const features = useAppSelector(state => state.feature.entities);
+  const boxContents = useAppSelector(state => state.boxContent.entities);
+  const warranties = useAppSelector(state => state.warranty.entities);
   const productEntity = useAppSelector(state => state.product.entity);
   const loading = useAppSelector(state => state.product.loading);
   const updating = useAppSelector(state => state.product.updating);
   const updateSuccess = useAppSelector(state => state.product.updateSuccess);
+  const discountTypeValues = Object.keys(DiscountType);
+  const currencyValues = Object.keys(Currency);
   const colorValues = Object.keys(Color);
   const processorValues = Object.keys(Processor);
   const memoryValues = Object.keys(Memory);
@@ -43,6 +55,10 @@ export const ProductUpdate = () => {
     }
 
     dispatch(getCategories({}));
+    dispatch(getDescriptions({}));
+    dispatch(getFeatures({}));
+    dispatch(getBoxContents({}));
+    dispatch(getWarranties({}));
   }, []);
 
   useEffect(() => {
@@ -55,14 +71,24 @@ export const ProductUpdate = () => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
     }
-    if (values.price !== undefined && typeof values.price !== 'number') {
-      values.price = Number(values.price);
+    if (values.basePrice !== undefined && typeof values.basePrice !== 'number') {
+      values.basePrice = Number(values.basePrice);
+    }
+    if (values.discountPrice !== undefined && typeof values.discountPrice !== 'number') {
+      values.discountPrice = Number(values.discountPrice);
+    }
+    if (values.discountAmount !== undefined && typeof values.discountAmount !== 'number') {
+      values.discountAmount = Number(values.discountAmount);
     }
 
     const entity = {
       ...productEntity,
       ...values,
       category: categories.find(it => it.id.toString() === values.category?.toString()),
+      description: descriptions.find(it => it.id.toString() === values.description?.toString()),
+      feature: features.find(it => it.id.toString() === values.feature?.toString()),
+      boxContent: boxContents.find(it => it.id.toString() === values.boxContent?.toString()),
+      warranty: warranties.find(it => it.id.toString() === values.warranty?.toString()),
     };
 
     if (isNew) {
@@ -76,12 +102,18 @@ export const ProductUpdate = () => {
     isNew
       ? {}
       : {
+          discountType: 'PERCENTAGE',
+          currency: 'IDR',
           color: 'MIDNIGHT',
-          processor: 'APPLE_M2_CHIP',
-          memory: 'GB_16',
-          storage: 'GB_256',
+          processor: 'APPLE_M2_8CPU_8GPU',
+          memory: 'MEMORY_16GB',
+          storage: 'STORAGE_256GB',
           ...productEntity,
           category: productEntity?.category?.id,
+          description: productEntity?.description?.id,
+          feature: productEntity?.feature?.id,
+          boxContent: productEntity?.boxContent?.id,
+          warranty: productEntity?.warranty?.id,
         };
 
   return (
@@ -130,10 +162,10 @@ export const ProductUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('larissShopAssistantApp.product.price')}
-                id="product-price"
-                name="price"
-                data-cy="price"
+                label={translate('larissShopAssistantApp.product.basePrice')}
+                id="product-basePrice"
+                name="basePrice"
+                data-cy="basePrice"
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
@@ -141,15 +173,45 @@ export const ProductUpdate = () => {
                 }}
               />
               <ValidatedField
+                label={translate('larissShopAssistantApp.product.discountPrice')}
+                id="product-discountPrice"
+                name="discountPrice"
+                data-cy="discountPrice"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('larissShopAssistantApp.product.discountAmount')}
+                id="product-discountAmount"
+                name="discountAmount"
+                data-cy="discountAmount"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('larissShopAssistantApp.product.discountType')}
+                id="product-discountType"
+                name="discountType"
+                data-cy="discountType"
+                type="select"
+              >
+                {discountTypeValues.map(discountType => (
+                  <option value={discountType} key={discountType}>
+                    {translate(`larissShopAssistantApp.DiscountType.${discountType}`)}
+                  </option>
+                ))}
+              </ValidatedField>
+              <ValidatedField
                 label={translate('larissShopAssistantApp.product.currency')}
                 id="product-currency"
                 name="currency"
                 data-cy="currency"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
+                type="select"
+              >
+                {currencyValues.map(currency => (
+                  <option value={currency} key={currency}>
+                    {translate(`larissShopAssistantApp.Currency.${currency}`)}
+                  </option>
+                ))}
+              </ValidatedField>
               <ValidatedField
                 label={translate('larissShopAssistantApp.product.color')}
                 id="product-color"
@@ -203,34 +265,6 @@ export const ProductUpdate = () => {
                 ))}
               </ValidatedField>
               <ValidatedField
-                label={translate('larissShopAssistantApp.product.description')}
-                id="product-description"
-                name="description"
-                data-cy="description"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('larissShopAssistantApp.product.feature')}
-                id="product-feature"
-                name="feature"
-                data-cy="feature"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('larissShopAssistantApp.product.boxContents')}
-                id="product-boxContents"
-                name="boxContents"
-                data-cy="boxContents"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('larissShopAssistantApp.product.warranty')}
-                id="product-warranty"
-                name="warranty"
-                data-cy="warranty"
-                type="text"
-              />
-              <ValidatedField
                 id="product-category"
                 name="category"
                 data-cy="category"
@@ -240,6 +274,70 @@ export const ProductUpdate = () => {
                 <option value="" key="0" />
                 {categories
                   ? categories.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.categoryEn}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="product-description"
+                name="description"
+                data-cy="description"
+                label={translate('larissShopAssistantApp.product.description')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {descriptions
+                  ? descriptions.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="product-feature"
+                name="feature"
+                data-cy="feature"
+                label={translate('larissShopAssistantApp.product.feature')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {features
+                  ? features.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="product-boxContent"
+                name="boxContent"
+                data-cy="boxContent"
+                label={translate('larissShopAssistantApp.product.boxContent')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {boxContents
+                  ? boxContents.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="product-warranty"
+                name="warranty"
+                data-cy="warranty"
+                label={translate('larissShopAssistantApp.product.warranty')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {warranties
+                  ? warranties.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.name}
                       </option>

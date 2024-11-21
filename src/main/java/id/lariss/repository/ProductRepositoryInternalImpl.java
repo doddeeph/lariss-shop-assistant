@@ -1,8 +1,12 @@
 package id.lariss.repository;
 
 import id.lariss.domain.Product;
+import id.lariss.repository.rowmapper.BoxContentRowMapper;
 import id.lariss.repository.rowmapper.CategoryRowMapper;
+import id.lariss.repository.rowmapper.DescriptionRowMapper;
+import id.lariss.repository.rowmapper.FeatureRowMapper;
 import id.lariss.repository.rowmapper.ProductRowMapper;
+import id.lariss.repository.rowmapper.WarrantyRowMapper;
 import io.r2dbc.spi.Row;
 import io.r2dbc.spi.RowMetadata;
 import java.util.List;
@@ -36,15 +40,27 @@ class ProductRepositoryInternalImpl extends SimpleR2dbcRepository<Product, Long>
     private final EntityManager entityManager;
 
     private final CategoryRowMapper categoryMapper;
+    private final DescriptionRowMapper descriptionMapper;
+    private final FeatureRowMapper featureMapper;
+    private final BoxContentRowMapper boxcontentMapper;
+    private final WarrantyRowMapper warrantyMapper;
     private final ProductRowMapper productMapper;
 
     private static final Table entityTable = Table.aliased("product", EntityManager.ENTITY_ALIAS);
     private static final Table categoryTable = Table.aliased("category", "category");
+    private static final Table descriptionTable = Table.aliased("description", "description");
+    private static final Table featureTable = Table.aliased("feature", "feature");
+    private static final Table boxContentTable = Table.aliased("box_content", "boxContent");
+    private static final Table warrantyTable = Table.aliased("warranty", "warranty");
 
     public ProductRepositoryInternalImpl(
         R2dbcEntityTemplate template,
         EntityManager entityManager,
         CategoryRowMapper categoryMapper,
+        DescriptionRowMapper descriptionMapper,
+        FeatureRowMapper featureMapper,
+        BoxContentRowMapper boxcontentMapper,
+        WarrantyRowMapper warrantyMapper,
         ProductRowMapper productMapper,
         R2dbcEntityOperations entityOperations,
         R2dbcConverter converter
@@ -58,6 +74,10 @@ class ProductRepositoryInternalImpl extends SimpleR2dbcRepository<Product, Long>
         this.r2dbcEntityTemplate = template;
         this.entityManager = entityManager;
         this.categoryMapper = categoryMapper;
+        this.descriptionMapper = descriptionMapper;
+        this.featureMapper = featureMapper;
+        this.boxcontentMapper = boxcontentMapper;
+        this.warrantyMapper = warrantyMapper;
         this.productMapper = productMapper;
     }
 
@@ -69,12 +89,28 @@ class ProductRepositoryInternalImpl extends SimpleR2dbcRepository<Product, Long>
     RowsFetchSpec<Product> createQuery(Pageable pageable, Condition whereClause) {
         List<Expression> columns = ProductSqlHelper.getColumns(entityTable, EntityManager.ENTITY_ALIAS);
         columns.addAll(CategorySqlHelper.getColumns(categoryTable, "category"));
+        columns.addAll(DescriptionSqlHelper.getColumns(descriptionTable, "description"));
+        columns.addAll(FeatureSqlHelper.getColumns(featureTable, "feature"));
+        columns.addAll(BoxContentSqlHelper.getColumns(boxContentTable, "boxContent"));
+        columns.addAll(WarrantySqlHelper.getColumns(warrantyTable, "warranty"));
         SelectFromAndJoinCondition selectFrom = Select.builder()
             .select(columns)
             .from(entityTable)
             .leftOuterJoin(categoryTable)
             .on(Column.create("category_id", entityTable))
-            .equals(Column.create("id", categoryTable));
+            .equals(Column.create("id", categoryTable))
+            .leftOuterJoin(descriptionTable)
+            .on(Column.create("description_id", entityTable))
+            .equals(Column.create("id", descriptionTable))
+            .leftOuterJoin(featureTable)
+            .on(Column.create("feature_id", entityTable))
+            .equals(Column.create("id", featureTable))
+            .leftOuterJoin(boxContentTable)
+            .on(Column.create("box_content_id", entityTable))
+            .equals(Column.create("id", boxContentTable))
+            .leftOuterJoin(warrantyTable)
+            .on(Column.create("warranty_id", entityTable))
+            .equals(Column.create("id", warrantyTable));
         // we do not support Criteria here for now as of https://github.com/jhipster/generator-jhipster/issues/18269
         String select = entityManager.createSelect(selectFrom, Product.class, pageable, whereClause);
         return db.sql(select).map(this::process);
@@ -109,6 +145,10 @@ class ProductRepositoryInternalImpl extends SimpleR2dbcRepository<Product, Long>
     private Product process(Row row, RowMetadata metadata) {
         Product entity = productMapper.apply(row, "e");
         entity.setCategory(categoryMapper.apply(row, "category"));
+        entity.setDescription(descriptionMapper.apply(row, "description"));
+        entity.setFeature(featureMapper.apply(row, "feature"));
+        entity.setBoxContent(boxcontentMapper.apply(row, "boxContent"));
+        entity.setWarranty(warrantyMapper.apply(row, "warranty"));
         return entity;
     }
 

@@ -23,11 +23,14 @@ public class Category implements Serializable {
     private Long id;
 
     @NotNull(message = "must not be null")
-    @Column("name")
-    private String name;
+    @Column("category_en")
+    private String categoryEn;
+
+    @Column("category_id")
+    private String categoryId;
 
     @org.springframework.data.annotation.Transient
-    @JsonIgnoreProperties(value = { "category" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "description", "feature", "boxContent", "warranty" }, allowSetters = true)
     private Set<Product> products = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -45,17 +48,30 @@ public class Category implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public String getCategoryEn() {
+        return this.categoryEn;
     }
 
-    public Category name(String name) {
-        this.setName(name);
+    public Category categoryEn(String categoryEn) {
+        this.setCategoryEn(categoryEn);
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryEn(String categoryEn) {
+        this.categoryEn = categoryEn;
+    }
+
+    public String getCategoryId() {
+        return this.categoryId;
+    }
+
+    public Category categoryId(String categoryId) {
+        this.setCategoryId(categoryId);
+        return this;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Set<Product> getProducts() {
@@ -113,7 +129,8 @@ public class Category implements Serializable {
     public String toString() {
         return "Category{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
+            ", categoryEn='" + getCategoryEn() + "'" +
+            ", categoryId='" + getCategoryId() + "'" +
             "}";
     }
 }

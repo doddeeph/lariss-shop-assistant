@@ -2,6 +2,8 @@ package id.lariss.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import id.lariss.domain.enumeration.Color;
+import id.lariss.domain.enumeration.Currency;
+import id.lariss.domain.enumeration.DiscountType;
 import id.lariss.domain.enumeration.Memory;
 import id.lariss.domain.enumeration.Processor;
 import id.lariss.domain.enumeration.Storage;
@@ -34,12 +36,21 @@ public class Product implements Serializable {
     private String sku;
 
     @NotNull(message = "must not be null")
-    @Column("price")
-    private BigDecimal price;
+    @Column("base_price")
+    private BigDecimal basePrice;
+
+    @Column("discount_price")
+    private BigDecimal discountPrice;
+
+    @Column("discount_amount")
+    private BigDecimal discountAmount;
+
+    @Column("discount_type")
+    private DiscountType discountType;
 
     @NotNull(message = "must not be null")
     @Column("currency")
-    private String currency;
+    private Currency currency;
 
     @NotNull(message = "must not be null")
     @Column("color")
@@ -57,24 +68,40 @@ public class Product implements Serializable {
     @Column("storage")
     private Storage storage;
 
-    @Column("description")
-    private String description;
-
-    @Column("feature")
-    private String feature;
-
-    @Column("box_contents")
-    private String boxContents;
-
-    @Column("warranty")
-    private String warranty;
-
     @org.springframework.data.annotation.Transient
     @JsonIgnoreProperties(value = { "products" }, allowSetters = true)
     private Category category;
 
+    @org.springframework.data.annotation.Transient
+    @JsonIgnoreProperties(value = { "products" }, allowSetters = true)
+    private Description description;
+
+    @org.springframework.data.annotation.Transient
+    @JsonIgnoreProperties(value = { "products" }, allowSetters = true)
+    private Feature feature;
+
+    @org.springframework.data.annotation.Transient
+    @JsonIgnoreProperties(value = { "products" }, allowSetters = true)
+    private BoxContent boxContent;
+
+    @org.springframework.data.annotation.Transient
+    @JsonIgnoreProperties(value = { "products" }, allowSetters = true)
+    private Warranty warranty;
+
     @Column("category_id")
     private Long categoryId;
+
+    @Column("description_id")
+    private Long descriptionId;
+
+    @Column("feature_id")
+    private Long featureId;
+
+    @Column("box_content_id")
+    private Long boxContentId;
+
+    @Column("warranty_id")
+    private Long warrantyId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -117,29 +144,68 @@ public class Product implements Serializable {
         this.sku = sku;
     }
 
-    public BigDecimal getPrice() {
-        return this.price;
+    public BigDecimal getBasePrice() {
+        return this.basePrice;
     }
 
-    public Product price(BigDecimal price) {
-        this.setPrice(price);
+    public Product basePrice(BigDecimal basePrice) {
+        this.setBasePrice(basePrice);
         return this;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price != null ? price.stripTrailingZeros() : null;
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice != null ? basePrice.stripTrailingZeros() : null;
     }
 
-    public String getCurrency() {
+    public BigDecimal getDiscountPrice() {
+        return this.discountPrice;
+    }
+
+    public Product discountPrice(BigDecimal discountPrice) {
+        this.setDiscountPrice(discountPrice);
+        return this;
+    }
+
+    public void setDiscountPrice(BigDecimal discountPrice) {
+        this.discountPrice = discountPrice != null ? discountPrice.stripTrailingZeros() : null;
+    }
+
+    public BigDecimal getDiscountAmount() {
+        return this.discountAmount;
+    }
+
+    public Product discountAmount(BigDecimal discountAmount) {
+        this.setDiscountAmount(discountAmount);
+        return this;
+    }
+
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount != null ? discountAmount.stripTrailingZeros() : null;
+    }
+
+    public DiscountType getDiscountType() {
+        return this.discountType;
+    }
+
+    public Product discountType(DiscountType discountType) {
+        this.setDiscountType(discountType);
+        return this;
+    }
+
+    public void setDiscountType(DiscountType discountType) {
+        this.discountType = discountType;
+    }
+
+    public Currency getCurrency() {
         return this.currency;
     }
 
-    public Product currency(String currency) {
+    public Product currency(Currency currency) {
         this.setCurrency(currency);
         return this;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
@@ -195,58 +261,6 @@ public class Product implements Serializable {
         this.storage = storage;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
-    public Product description(String description) {
-        this.setDescription(description);
-        return this;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getFeature() {
-        return this.feature;
-    }
-
-    public Product feature(String feature) {
-        this.setFeature(feature);
-        return this;
-    }
-
-    public void setFeature(String feature) {
-        this.feature = feature;
-    }
-
-    public String getBoxContents() {
-        return this.boxContents;
-    }
-
-    public Product boxContents(String boxContents) {
-        this.setBoxContents(boxContents);
-        return this;
-    }
-
-    public void setBoxContents(String boxContents) {
-        this.boxContents = boxContents;
-    }
-
-    public String getWarranty() {
-        return this.warranty;
-    }
-
-    public Product warranty(String warranty) {
-        this.setWarranty(warranty);
-        return this;
-    }
-
-    public void setWarranty(String warranty) {
-        this.warranty = warranty;
-    }
-
     public Category getCategory() {
         return this.category;
     }
@@ -261,12 +275,100 @@ public class Product implements Serializable {
         return this;
     }
 
+    public Description getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(Description description) {
+        this.description = description;
+        this.descriptionId = description != null ? description.getId() : null;
+    }
+
+    public Product description(Description description) {
+        this.setDescription(description);
+        return this;
+    }
+
+    public Feature getFeature() {
+        return this.feature;
+    }
+
+    public void setFeature(Feature feature) {
+        this.feature = feature;
+        this.featureId = feature != null ? feature.getId() : null;
+    }
+
+    public Product feature(Feature feature) {
+        this.setFeature(feature);
+        return this;
+    }
+
+    public BoxContent getBoxContent() {
+        return this.boxContent;
+    }
+
+    public void setBoxContent(BoxContent boxContent) {
+        this.boxContent = boxContent;
+        this.boxContentId = boxContent != null ? boxContent.getId() : null;
+    }
+
+    public Product boxContent(BoxContent boxContent) {
+        this.setBoxContent(boxContent);
+        return this;
+    }
+
+    public Warranty getWarranty() {
+        return this.warranty;
+    }
+
+    public void setWarranty(Warranty warranty) {
+        this.warranty = warranty;
+        this.warrantyId = warranty != null ? warranty.getId() : null;
+    }
+
+    public Product warranty(Warranty warranty) {
+        this.setWarranty(warranty);
+        return this;
+    }
+
     public Long getCategoryId() {
         return this.categoryId;
     }
 
     public void setCategoryId(Long category) {
         this.categoryId = category;
+    }
+
+    public Long getDescriptionId() {
+        return this.descriptionId;
+    }
+
+    public void setDescriptionId(Long description) {
+        this.descriptionId = description;
+    }
+
+    public Long getFeatureId() {
+        return this.featureId;
+    }
+
+    public void setFeatureId(Long feature) {
+        this.featureId = feature;
+    }
+
+    public Long getBoxContentId() {
+        return this.boxContentId;
+    }
+
+    public void setBoxContentId(Long boxContent) {
+        this.boxContentId = boxContent;
+    }
+
+    public Long getWarrantyId() {
+        return this.warrantyId;
+    }
+
+    public void setWarrantyId(Long warranty) {
+        this.warrantyId = warranty;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -295,16 +397,15 @@ public class Product implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", sku='" + getSku() + "'" +
-            ", price=" + getPrice() +
+            ", basePrice=" + getBasePrice() +
+            ", discountPrice=" + getDiscountPrice() +
+            ", discountAmount=" + getDiscountAmount() +
+            ", discountType='" + getDiscountType() + "'" +
             ", currency='" + getCurrency() + "'" +
             ", color='" + getColor() + "'" +
             ", processor='" + getProcessor() + "'" +
             ", memory='" + getMemory() + "'" +
             ", storage='" + getStorage() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", feature='" + getFeature() + "'" +
-            ", boxContents='" + getBoxContents() + "'" +
-            ", warranty='" + getWarranty() + "'" +
             "}";
     }
 }

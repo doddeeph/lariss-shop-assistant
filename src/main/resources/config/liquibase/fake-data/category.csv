@@ -1,11 +1,52 @@
-id;name
-1;violently when gah
-2;around
-3;healthily enlightened messy
-4;steak
-5;optimistically
-6;meadow
-7;dutiful christen
-8;gah quit heighten
-9;as celebrate kookily
-10;meh ugh
+id,category_en,category_id
+1,Mac,Mac
+2,Macbook Air,Macbook Air
+3,Macbook Pro,Macbook Pro
+4,iMac,iMac
+5,iPad,iPad
+6,iPad Pro,iPad Pro
+7,iPad Air,iPad Air
+8,iPad Mini,iPad Mini
+9,iPhone,iPhone
+10,iPhone 15 Pro,iPhone 15 Pro
+11,iPhone 15,iPhone 15
+12,iPhone 14,iPhone 14
+13,iPhone 13,iPhone 13
+14,iPhone 12,iPhone 12
+15,Apple Watch,Apple Watch
+16,Apple Watch SE,Apple Watch SE
+17,Apple Watch Ultra,Apple Watch Ultra
+18,Apple Watch Series 9,Apple Watch Series 9
+19,Music,Music
+20,AirPods Pro (2nd gen),AirPods Pro (2nd gen)
+21,AirPods (3rd gen),AirPods (3rd gen)
+22,AirPods (2nd gen),AirPods (2nd gen)
+23,AirPods Max,AirPods Max
+24,Accessories,Aksesori
+25,Mac Accessories,Mac Aksesori
+26,iPad Accessories,iPad Aksesori
+27,iPhone Accessories,iPhone Aksesori
+28,Apple Watch Accessories,Apple Watch Aksesori
+29,Music Accessories,Music Aksesori
+30,AirTag & Accessories,AirTag & Accessories
+31,Apple Accessories,Apple Aksesori
+32,Other Accessories,Aksesori Lainnya
+33,Service,Layanan
+34,Customer Service,Layanan Pelanggan
+35,Business,Bisnis
+36,Financing,Financing
+37,Trade-in,Trade-in
+38,In-Store Classes,In-Store Classes
+39,Apple Care,Apple Care
+40,iProtect,iProtect
+41,Service Location,Lokasi Service
+42,Events & Promotions,Event & Promo
+43,Jenius Pay Promotion,Promo Jenius Pay
+44,SpayLater Promotion,Promo SpayLater
+45,Allo Bank Promotion,Promo Allo Bank
+46,Indodana Promotion,Promo Indodana
+47,Kredivo Promotion,Promo Kredivo
+48,HCI Promo,Promo HCI
+49,Shop,Toko
+50,Business,Bisnis
+51,Education,Edukasi

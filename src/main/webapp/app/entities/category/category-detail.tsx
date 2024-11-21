@@ -32,11 +32,17 @@ export const CategoryDetail = () => {
           </dt>
           <dd>{categoryEntity.id}</dd>
           <dt>
-            <span id="name">
-              <Translate contentKey="larissShopAssistantApp.category.name">Name</Translate>
+            <span id="categoryEn">
+              <Translate contentKey="larissShopAssistantApp.category.categoryEn">Category En</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.name}</dd>
+          <dd>{categoryEntity.categoryEn}</dd>
+          <dt>
+            <span id="categoryId">
+              <Translate contentKey="larissShopAssistantApp.category.categoryId">Category Id</Translate>
+            </span>
+          </dt>
+          <dd>{categoryEntity.categoryId}</dd>
         </dl>
         <Button tag={Link} to="/category" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

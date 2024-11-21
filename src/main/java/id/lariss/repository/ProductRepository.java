@@ -31,6 +31,30 @@ public interface ProductRepository extends ReactiveCrudRepository<Product, Long>
     @Query("SELECT * FROM product entity WHERE entity.category_id IS NULL")
     Flux<Product> findAllWhereCategoryIsNull();
 
+    @Query("SELECT * FROM product entity WHERE entity.description_id = :id")
+    Flux<Product> findByDescription(Long id);
+
+    @Query("SELECT * FROM product entity WHERE entity.description_id IS NULL")
+    Flux<Product> findAllWhereDescriptionIsNull();
+
+    @Query("SELECT * FROM product entity WHERE entity.feature_id = :id")
+    Flux<Product> findByFeature(Long id);
+
+    @Query("SELECT * FROM product entity WHERE entity.feature_id IS NULL")
+    Flux<Product> findAllWhereFeatureIsNull();
+
+    @Query("SELECT * FROM product entity WHERE entity.box_content_id = :id")
+    Flux<Product> findByBoxContent(Long id);
+
+    @Query("SELECT * FROM product entity WHERE entity.box_content_id IS NULL")
+    Flux<Product> findAllWhereBoxContentIsNull();
+
+    @Query("SELECT * FROM product entity WHERE entity.warranty_id = :id")
+    Flux<Product> findByWarranty(Long id);
+
+    @Query("SELECT * FROM product entity WHERE entity.warranty_id IS NULL")
+    Flux<Product> findAllWhereWarrantyIsNull();
+
     @Override
     <S extends Product> Mono<S> save(S entity);
 

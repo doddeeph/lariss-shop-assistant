@@ -20,17 +20,20 @@
       "id": "ID",
       "name": "Name",
       "sku": "Sku",
-      "price": "Price",
+      "basePrice": "Base Price",
+      "discountPrice": "Discount Price",
+      "discountAmount": "Discount Amount",
+      "discountType": "Discount Type",
       "currency": "Currency",
       "color": "Color",
       "processor": "Processor",
       "memory": "Memory",
       "storage": "Storage",
+      "category": "Category",
       "description": "Description",
       "feature": "Feature",
-      "boxContents": "Box Contents",
-      "warranty": "Warranty",
-      "category": "Category"
+      "boxContent": "Box Content",
+      "warranty": "Warranty"
     }
   }
 }

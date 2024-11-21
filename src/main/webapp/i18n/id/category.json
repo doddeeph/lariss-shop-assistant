@@ -18,7 +18,8 @@
         "title": "Category"
       },
       "id": "ID",
-      "name": "Name",
+      "categoryEn": "Category En",
+      "categoryId": "Category Id",
       "product": "Product"
     }
   }

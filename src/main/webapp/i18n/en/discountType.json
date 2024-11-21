@@ -1,0 +1,9 @@
+{
+  "larissShopAssistantApp": {
+    "DiscountType": {
+      "null": "",
+      "PERCENTAGE": "PERCENTAGE",
+      "AMOUNT": "AMOUNT"
+    }
+  }
+}

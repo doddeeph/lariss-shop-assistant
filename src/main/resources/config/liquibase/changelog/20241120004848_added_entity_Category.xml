@@ -14,8 +14,11 @@
             <column name="id" type="bigint" autoIncrement="true" startWith="1500">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(255)">
+            <column name="category_en" type="varchar(255)">
                 <constraints nullable="false" />
+            </column>
+            <column name="category_id" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -34,11 +37,11 @@
     <changeSet id="20241120004848-1-data" author="jhipster" context="faker">
         <loadData
                   file="config/liquibase/fake-data/category.csv"
-                  separator=";"
                   tableName="category"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="name" type="string"/>
+            <column name="category_en" type="string"/>
+            <column name="category_id" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -1,0 +1,35 @@
+{
+  "annotations": {
+    "changelogDate": "20241121034340"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "contentEn",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "contentId",
+      "fieldType": "String"
+    }
+  ],
+  "name": "BoxContent",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "boxContent",
+      "relationshipName": "product",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

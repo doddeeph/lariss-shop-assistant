@@ -44,11 +44,29 @@ export const ProductDetail = () => {
           </dt>
           <dd>{productEntity.sku}</dd>
           <dt>
-            <span id="price">
-              <Translate contentKey="larissShopAssistantApp.product.price">Price</Translate>
+            <span id="basePrice">
+              <Translate contentKey="larissShopAssistantApp.product.basePrice">Base Price</Translate>
             </span>
           </dt>
-          <dd>{productEntity.price}</dd>
+          <dd>{productEntity.basePrice}</dd>
+          <dt>
+            <span id="discountPrice">
+              <Translate contentKey="larissShopAssistantApp.product.discountPrice">Discount Price</Translate>
+            </span>
+          </dt>
+          <dd>{productEntity.discountPrice}</dd>
+          <dt>
+            <span id="discountAmount">
+              <Translate contentKey="larissShopAssistantApp.product.discountAmount">Discount Amount</Translate>
+            </span>
+          </dt>
+          <dd>{productEntity.discountAmount}</dd>
+          <dt>
+            <span id="discountType">
+              <Translate contentKey="larissShopAssistantApp.product.discountType">Discount Type</Translate>
+            </span>
+          </dt>
+          <dd>{productEntity.discountType}</dd>
           <dt>
             <span id="currency">
               <Translate contentKey="larissShopAssistantApp.product.currency">Currency</Translate>
@@ -80,33 +98,25 @@ export const ProductDetail = () => {
           </dt>
           <dd>{productEntity.storage}</dd>
           <dt>
-            <span id="description">
-              <Translate contentKey="larissShopAssistantApp.product.description">Description</Translate>
-            </span>
-          </dt>
-          <dd>{productEntity.description}</dd>
-          <dt>
-            <span id="feature">
-              <Translate contentKey="larissShopAssistantApp.product.feature">Feature</Translate>
-            </span>
-          </dt>
-          <dd>{productEntity.feature}</dd>
-          <dt>
-            <span id="boxContents">
-              <Translate contentKey="larissShopAssistantApp.product.boxContents">Box Contents</Translate>
-            </span>
-          </dt>
-          <dd>{productEntity.boxContents}</dd>
-          <dt>
-            <span id="warranty">
-              <Translate contentKey="larissShopAssistantApp.product.warranty">Warranty</Translate>
-            </span>
-          </dt>
-          <dd>{productEntity.warranty}</dd>
-          <dt>
             <Translate contentKey="larissShopAssistantApp.product.category">Category</Translate>
           </dt>
-          <dd>{productEntity.category ? productEntity.category.name : ''}</dd>
+          <dd>{productEntity.category ? productEntity.category.categoryEn : ''}</dd>
+          <dt>
+            <Translate contentKey="larissShopAssistantApp.product.description">Description</Translate>
+          </dt>
+          <dd>{productEntity.description ? productEntity.description.name : ''}</dd>
+          <dt>
+            <Translate contentKey="larissShopAssistantApp.product.feature">Feature</Translate>
+          </dt>
+          <dd>{productEntity.feature ? productEntity.feature.name : ''}</dd>
+          <dt>
+            <Translate contentKey="larissShopAssistantApp.product.boxContent">Box Content</Translate>
+          </dt>
+          <dd>{productEntity.boxContent ? productEntity.boxContent.name : ''}</dd>
+          <dt>
+            <Translate contentKey="larissShopAssistantApp.product.warranty">Warranty</Translate>
+          </dt>
+          <dd>{productEntity.warranty ? productEntity.warranty.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/product" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

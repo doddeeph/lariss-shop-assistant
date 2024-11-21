@@ -121,9 +121,21 @@ export const Product = () => {
                   <Translate contentKey="larissShopAssistantApp.product.sku">Sku</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('sku')} />
                 </th>
-                <th className="hand" onClick={sort('price')}>
-                  <Translate contentKey="larissShopAssistantApp.product.price">Price</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('price')} />
+                <th className="hand" onClick={sort('basePrice')}>
+                  <Translate contentKey="larissShopAssistantApp.product.basePrice">Base Price</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('basePrice')} />
+                </th>
+                <th className="hand" onClick={sort('discountPrice')}>
+                  <Translate contentKey="larissShopAssistantApp.product.discountPrice">Discount Price</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('discountPrice')} />
+                </th>
+                <th className="hand" onClick={sort('discountAmount')}>
+                  <Translate contentKey="larissShopAssistantApp.product.discountAmount">Discount Amount</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('discountAmount')} />
+                </th>
+                <th className="hand" onClick={sort('discountType')}>
+                  <Translate contentKey="larissShopAssistantApp.product.discountType">Discount Type</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('discountType')} />
                 </th>
                 <th className="hand" onClick={sort('currency')}>
                   <Translate contentKey="larissShopAssistantApp.product.currency">Currency</Translate>{' '}
@@ -145,24 +157,20 @@ export const Product = () => {
                   <Translate contentKey="larissShopAssistantApp.product.storage">Storage</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('storage')} />
                 </th>
-                <th className="hand" onClick={sort('description')}>
-                  <Translate contentKey="larissShopAssistantApp.product.description">Description</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('description')} />
-                </th>
-                <th className="hand" onClick={sort('feature')}>
-                  <Translate contentKey="larissShopAssistantApp.product.feature">Feature</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('feature')} />
-                </th>
-                <th className="hand" onClick={sort('boxContents')}>
-                  <Translate contentKey="larissShopAssistantApp.product.boxContents">Box Contents</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('boxContents')} />
-                </th>
-                <th className="hand" onClick={sort('warranty')}>
-                  <Translate contentKey="larissShopAssistantApp.product.warranty">Warranty</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('warranty')} />
-                </th>
                 <th>
                   <Translate contentKey="larissShopAssistantApp.product.category">Category</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="larissShopAssistantApp.product.description">Description</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="larissShopAssistantApp.product.feature">Feature</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="larissShopAssistantApp.product.boxContent">Box Content</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="larissShopAssistantApp.product.warranty">Warranty</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -177,8 +185,15 @@ export const Product = () => {
                   </td>
                   <td>{product.name}</td>
                   <td>{product.sku}</td>
-                  <td>{product.price}</td>
-                  <td>{product.currency}</td>
+                  <td>{product.basePrice}</td>
+                  <td>{product.discountPrice}</td>
+                  <td>{product.discountAmount}</td>
+                  <td>
+                    <Translate contentKey={`larissShopAssistantApp.DiscountType.${product.discountType}`} />
+                  </td>
+                  <td>
+                    <Translate contentKey={`larissShopAssistantApp.Currency.${product.currency}`} />
+                  </td>
                   <td>
                     <Translate contentKey={`larissShopAssistantApp.Color.${product.color}`} />
                   </td>
@@ -191,11 +206,13 @@ export const Product = () => {
                   <td>
                     <Translate contentKey={`larissShopAssistantApp.Storage.${product.storage}`} />
                   </td>
-                  <td>{product.description}</td>
-                  <td>{product.feature}</td>
-                  <td>{product.boxContents}</td>
-                  <td>{product.warranty}</td>
-                  <td>{product.category ? <Link to={`/category/${product.category.id}`}>{product.category.name}</Link> : ''}</td>
+                  <td>{product.category ? <Link to={`/category/${product.category.id}`}>{product.category.categoryEn}</Link> : ''}</td>
+                  <td>
+                    {product.description ? <Link to={`/description/${product.description.id}`}>{product.description.name}</Link> : ''}
+                  </td>
+                  <td>{product.feature ? <Link to={`/feature/${product.feature.id}`}>{product.feature.name}</Link> : ''}</td>
+                  <td>{product.boxContent ? <Link to={`/box-content/${product.boxContent.id}`}>{product.boxContent.name}</Link> : ''}</td>
+                  <td>{product.warranty ? <Link to={`/warranty/${product.warranty.id}`}>{product.warranty.name}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/product/${product.id}`} color="info" size="sm" data-cy="entityDetailsButton">

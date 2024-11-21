@@ -6,7 +6,7 @@ package id.lariss.domain.enumeration;
 public enum Color {
     MIDNIGHT("Midnight"),
     SPACE_GREY("Space Grey"),
-    SLIVER("Silver"),
+    SILVER("Silver"),
     STARLIGHT("Starlight");
 
     private final String value;

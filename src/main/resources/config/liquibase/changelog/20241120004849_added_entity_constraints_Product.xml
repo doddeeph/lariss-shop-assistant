@@ -16,5 +16,33 @@
                                  referencedColumnNames="id"
                                  referencedTableName="category"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="description_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product__description_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="description"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="feature_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product__feature_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="feature"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="box_content_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product__box_content_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="box_content"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="warranty_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product__warranty_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="warranty"
+                                 />
     </changeSet>
 </databaseChangeLog>

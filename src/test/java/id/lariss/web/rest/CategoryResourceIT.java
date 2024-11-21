@@ -32,8 +32,11 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @WithMockUser
 class CategoryResourceIT {
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_CATEGORY_EN = "AAAAAAAAAA";
+    private static final String UPDATED_CATEGORY_EN = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CATEGORY_ID = "AAAAAAAAAA";
+    private static final String UPDATED_CATEGORY_ID = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/categories";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -67,7 +70,7 @@ class CategoryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Category createEntity() {
-        return new Category().name(DEFAULT_NAME);
+        return new Category().categoryEn(DEFAULT_CATEGORY_EN).categoryId(DEFAULT_CATEGORY_ID);
     }
 
     /**
@@ -77,7 +80,7 @@ class CategoryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Category createUpdatedEntity() {
-        return new Category().name(UPDATED_NAME);
+        return new Category().categoryEn(UPDATED_CATEGORY_EN).categoryId(UPDATED_CATEGORY_ID);
     }
 
     public static void deleteEntities(EntityManager em) {
@@ -150,10 +153,10 @@ class CategoryResourceIT {
     }
 
     @Test
-    void checkNameIsRequired() throws Exception {
+    void checkCategoryEnIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        category.setName(null);
+        category.setCategoryEn(null);
 
         // Create the Category, which fails.
         CategoryDTO categoryDTO = categoryMapper.toDto(category);
@@ -188,8 +191,10 @@ class CategoryResourceIT {
             .expectBody()
             .jsonPath("$.[*].id")
             .value(hasItem(category.getId().intValue()))
-            .jsonPath("$.[*].name")
-            .value(hasItem(DEFAULT_NAME));
+            .jsonPath("$.[*].categoryEn")
+            .value(hasItem(DEFAULT_CATEGORY_EN))
+            .jsonPath("$.[*].categoryId")
+            .value(hasItem(DEFAULT_CATEGORY_ID));
     }
 
     @Test
@@ -210,8 +215,10 @@ class CategoryResourceIT {
             .expectBody()
             .jsonPath("$.id")
             .value(is(category.getId().intValue()))
-            .jsonPath("$.name")
-            .value(is(DEFAULT_NAME));
+            .jsonPath("$.categoryEn")
+            .value(is(DEFAULT_CATEGORY_EN))
+            .jsonPath("$.categoryId")
+            .value(is(DEFAULT_CATEGORY_ID));
     }
 
     @Test
@@ -235,7 +242,7 @@ class CategoryResourceIT {
 
         // Update the category
         Category updatedCategory = categoryRepository.findById(category.getId()).block();
-        updatedCategory.name(UPDATED_NAME);
+        updatedCategory.categoryEn(UPDATED_CATEGORY_EN).categoryId(UPDATED_CATEGORY_ID);
         CategoryDTO categoryDTO = categoryMapper.toDto(updatedCategory);
 
         webTestClient
@@ -329,7 +336,7 @@ class CategoryResourceIT {
         Category partialUpdatedCategory = new Category();
         partialUpdatedCategory.setId(category.getId());
 
-        partialUpdatedCategory.name(UPDATED_NAME);
+        partialUpdatedCategory.categoryId(UPDATED_CATEGORY_ID);
 
         webTestClient
             .patch()
@@ -357,7 +364,7 @@ class CategoryResourceIT {
         Category partialUpdatedCategory = new Category();
         partialUpdatedCategory.setId(category.getId());
 
-        partialUpdatedCategory.name(UPDATED_NAME);
+        partialUpdatedCategory.categoryEn(UPDATED_CATEGORY_EN).categoryId(UPDATED_CATEGORY_ID);
 
         webTestClient
             .patch()

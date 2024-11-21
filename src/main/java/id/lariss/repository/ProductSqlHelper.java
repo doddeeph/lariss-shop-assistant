@@ -13,18 +13,21 @@ public class ProductSqlHelper {
         columns.add(Column.aliased("id", table, columnPrefix + "_id"));
         columns.add(Column.aliased("name", table, columnPrefix + "_name"));
         columns.add(Column.aliased("sku", table, columnPrefix + "_sku"));
-        columns.add(Column.aliased("price", table, columnPrefix + "_price"));
+        columns.add(Column.aliased("base_price", table, columnPrefix + "_base_price"));
+        columns.add(Column.aliased("discount_price", table, columnPrefix + "_discount_price"));
+        columns.add(Column.aliased("discount_amount", table, columnPrefix + "_discount_amount"));
+        columns.add(Column.aliased("discount_type", table, columnPrefix + "_discount_type"));
         columns.add(Column.aliased("currency", table, columnPrefix + "_currency"));
         columns.add(Column.aliased("color", table, columnPrefix + "_color"));
         columns.add(Column.aliased("processor", table, columnPrefix + "_processor"));
         columns.add(Column.aliased("memory", table, columnPrefix + "_memory"));
         columns.add(Column.aliased("storage", table, columnPrefix + "_storage"));
-        columns.add(Column.aliased("description", table, columnPrefix + "_description"));
-        columns.add(Column.aliased("feature", table, columnPrefix + "_feature"));
-        columns.add(Column.aliased("box_contents", table, columnPrefix + "_box_contents"));
-        columns.add(Column.aliased("warranty", table, columnPrefix + "_warranty"));
 
         columns.add(Column.aliased("category_id", table, columnPrefix + "_category_id"));
+        columns.add(Column.aliased("description_id", table, columnPrefix + "_description_id"));
+        columns.add(Column.aliased("feature_id", table, columnPrefix + "_feature_id"));
+        columns.add(Column.aliased("box_content_id", table, columnPrefix + "_box_content_id"));
+        columns.add(Column.aliased("warranty_id", table, columnPrefix + "_warranty_id"));
         return columns;
     }
 }

@@ -1,11 +1,21 @@
-id;name;sku;price;currency;color;processor;memory;storage;description;feature;box_contents;warranty
-1;geez;blindly mortise deform;28852.88;scoff mature;SLIVER;APPLE_M3_CHIP_GPU_10_CORE;GB_16;GB_512;vastly drat likewise;rally;proceed likewise;step-mother
-2;bitterly anenst youthful;hungrily floss;4372.06;yearly premeditation slope;STARLIGHT;APPLE_M3_CHIP_GPU_10_CORE;GB_24;GB_256;unpleasant lovable;beside hence roger;bad gray;acidly general among
-3;excepting;yet hence harmful;25505.2;gah indeed;MIDNIGHT;APPLE_M2_CHIP;GB_16;GB_512;duh;under;ew pixellate amongst;instantly considering certainly
-4;even secret;brandish pish courageously;5125.76;uselessly;STARLIGHT;APPLE_M3_CHIP_GPU_8_CORE;GB_16;GB_512;lovingly efface;geez paintwork;moral;fatally adaptation magnificent
-5;closed navigate;by meanwhile plus;18290.69;ack which;SLIVER;APPLE_M3_CHIP_GPU_10_CORE;GB_24;GB_256;into notwithstanding shrilly;next;zowie even christen;amongst why hello
-6;lady cautiously important;quizzically unexpectedly crossly;29198.95;ah ape;SPACE_GREY;APPLE_M3_CHIP_GPU_8_CORE;GB_24;GB_512;discrete voluntarily;painfully anticodon;divine vamoose;yawn courteous
-7;spotless above director;gerbil finally;4430.36;sadly roughly forenenst;SPACE_GREY;APPLE_M3_CHIP_GPU_10_CORE;GB_24;GB_512;enchanting delightfully;whoa present;along who;over
-8;likewise profitable than;guilt;21391.49;tinderbox;SPACE_GREY;APPLE_M3_CHIP_GPU_10_CORE;GB_24;GB_256;near eek psst;over powerfully;storyboard bah;briefly
-9;generally;ick at ouch;6781.41;enormously;MIDNIGHT;APPLE_M2_CHIP;GB_16;GB_256;unto;lone weekly and;despite remark vastly;lumpy
-10;spork;astride standard yowza;5055.41;brightly provided dilate;STARLIGHT;APPLE_M3_CHIP_GPU_10_CORE;GB_16;GB_256;clear longingly near;blindly furthermore anxiously;bracelet finally dispose;uh-huh
+id,name,sku,base_price,discount_price,discount_amount,discount_type,currency,color,processor,memory,storage,category_id,description_id,feature_id,box_content_id,warranty_id
+1,15-inch MacBook Air,8100027799,22499000,0,0,PERCENTAGE,IDR,MIDNIGHT,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_256GB,2,1,1,1,1
+2,15-inch MacBook Air,8100027796,22499000,0,0,PERCENTAGE,IDR,SPACE_GREY,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_256GB,2,1,1,1,1
+3,15-inch MacBook Air,8100027797,22499000,0,0,PERCENTAGE,IDR,SILVER,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_256GB,2,1,1,1,1
+4,15-inch MacBook Air,8100027798,22499000,0,0,PERCENTAGE,IDR,STARLIGHT,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_256GB,2,1,1,1,1
+5,15-inch MacBook Air,8100142842,29499000,28999000,12,PERCENTAGE,IDR,MIDNIGHT,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_512GB,2,1,1,1,1
+6,15-inch MacBook Air,8100142839,29499000,28999000,12,PERCENTAGE,IDR,SPACE_GREY,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_512GB,2,1,1,1,1
+7,15-inch MacBook Air,8100142840,29499000,28999000,12,PERCENTAGE,IDR,SILVER,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_512GB,2,1,1,1,1
+8,15-inch MacBook Air,8100142841,29499000,28999000,12,PERCENTAGE,IDR,STARLIGHT,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_512GB,2,1,1,1,1
+9,15-inch MacBook Air,8100027803,29499000,0,0,PERCENTAGE,IDR,MIDNIGHT,APPLE_M3_8CPU_10GPU,MEMORY_24GB,STORAGE_512GB,2,1,1,1,1
+10,15-inch MacBook Air,8100027800,29499000,0,0,PERCENTAGE,IDR,SPACE_GREY,APPLE_M3_8CPU_10GPU,MEMORY_24GB,STORAGE_512GB,2,1,1,1,1
+11,15-inch MacBook Air,8100027801,29499000,0,0,PERCENTAGE,IDR,SILVER,APPLE_M3_8CPU_10GPU,MEMORY_24GB,STORAGE_512GB,2,1,1,1,1
+12,15-inch MacBook Air,8100027802,29499000,0,0,PERCENTAGE,IDR,STARLIGHT,APPLE_M3_8CPU_10GPU,MEMORY_24GB,STORAGE_512GB,2,1,1,1,1
+13,13-inch MacBook Air,8100142838,25999000,22999000,12,PERCENTAGE,IDR,MIDNIGHT,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_512GB,2,2,2,2,2
+14,13-inch MacBook Air,8100142835,25999000,22999000,12,PERCENTAGE,IDR,SPACE_GREY,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_512GB,2,2,2,2,2
+15,13-inch MacBook Air,8100142836,25999000,22999000,12,PERCENTAGE,IDR,SILVER,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_512GB,2,2,2,2,2
+16,13-inch MacBook Air,8100142837,25999000,22999000,12,PERCENTAGE,IDR,STARLIGHT,APPLE_M3_8CPU_10GPU,MEMORY_16GB,STORAGE_512GB,2,2,2,2,2
+17,13-inch MacBook Air,8100027795,25999000,0,0,PERCENTAGE,IDR,MIDNIGHT,APPLE_M3_8CPU_10GPU,MEMORY_24GB,STORAGE_512GB,2,2,2,2,2
+18,13-inch MacBook Air,8100027792,25999000,0,0,PERCENTAGE,IDR,SPACE_GREY,APPLE_M3_8CPU_10GPU,MEMORY_24GB,STORAGE_512GB,2,2,2,2,2
+19,13-inch MacBook Air,8100027793,25999000,0,0,PERCENTAGE,IDR,SILVER,APPLE_M3_8CPU_10GPU,MEMORY_24GB,STORAGE_512GB,2,2,2,2,2
+20,13-inch MacBook Air,8100027794,25999000,0,0,PERCENTAGE,IDR,STARLIGHT,APPLE_M3_8CPU_10GPU,MEMORY_24GB,STORAGE_512GB,2,2,2,2,2

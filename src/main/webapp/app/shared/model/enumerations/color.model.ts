@@ -3,7 +3,7 @@ export enum Color {
 
   SPACE_GREY = 'Space Grey',
 
-  SLIVER = 'Silver',
+  SILVER = 'Silver',
 
   STARLIGHT = 'Starlight',
 }

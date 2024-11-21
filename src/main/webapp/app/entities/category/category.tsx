@@ -113,9 +113,13 @@ export const Category = () => {
                   <Translate contentKey="larissShopAssistantApp.category.id">ID</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
                 </th>
-                <th className="hand" onClick={sort('name')}>
-                  <Translate contentKey="larissShopAssistantApp.category.name">Name</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
+                <th className="hand" onClick={sort('categoryEn')}>
+                  <Translate contentKey="larissShopAssistantApp.category.categoryEn">Category En</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('categoryEn')} />
+                </th>
+                <th className="hand" onClick={sort('categoryId')}>
+                  <Translate contentKey="larissShopAssistantApp.category.categoryId">Category Id</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('categoryId')} />
                 </th>
                 <th />
               </tr>
@@ -128,7 +132,8 @@ export const Category = () => {
                       {category.id}
                     </Button>
                   </td>
-                  <td>{category.name}</td>
+                  <td>{category.categoryEn}</td>
+                  <td>{category.categoryId}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/category/${category.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import id.lariss.IntegrationTest;
 import id.lariss.domain.Product;
 import id.lariss.domain.enumeration.Color;
+import id.lariss.domain.enumeration.Currency;
+import id.lariss.domain.enumeration.DiscountType;
 import id.lariss.domain.enumeration.Memory;
 import id.lariss.domain.enumeration.Processor;
 import id.lariss.domain.enumeration.Storage;
@@ -51,35 +53,32 @@ class ProductResourceIT {
     private static final String DEFAULT_SKU = "AAAAAAAAAA";
     private static final String UPDATED_SKU = "BBBBBBBBBB";
 
-    private static final BigDecimal DEFAULT_PRICE = new BigDecimal(1);
-    private static final BigDecimal UPDATED_PRICE = new BigDecimal(2);
+    private static final BigDecimal DEFAULT_BASE_PRICE = new BigDecimal(1);
+    private static final BigDecimal UPDATED_BASE_PRICE = new BigDecimal(2);
 
-    private static final String DEFAULT_CURRENCY = "AAAAAAAAAA";
-    private static final String UPDATED_CURRENCY = "BBBBBBBBBB";
+    private static final BigDecimal DEFAULT_DISCOUNT_PRICE = new BigDecimal(1);
+    private static final BigDecimal UPDATED_DISCOUNT_PRICE = new BigDecimal(2);
+
+    private static final BigDecimal DEFAULT_DISCOUNT_AMOUNT = new BigDecimal(1);
+    private static final BigDecimal UPDATED_DISCOUNT_AMOUNT = new BigDecimal(2);
+
+    private static final DiscountType DEFAULT_DISCOUNT_TYPE = DiscountType.PERCENTAGE;
+    private static final DiscountType UPDATED_DISCOUNT_TYPE = DiscountType.AMOUNT;
+
+    private static final Currency DEFAULT_CURRENCY = Currency.IDR;
+    private static final Currency UPDATED_CURRENCY = Currency.USD;
 
     private static final Color DEFAULT_COLOR = Color.MIDNIGHT;
     private static final Color UPDATED_COLOR = Color.SPACE_GREY;
 
-    private static final Processor DEFAULT_PROCESSOR = Processor.APPLE_M2_CHIP;
-    private static final Processor UPDATED_PROCESSOR = Processor.APPLE_M3_CHIP_GPU_8_CORE;
+    private static final Processor DEFAULT_PROCESSOR = Processor.APPLE_M2_8CPU_8GPU;
+    private static final Processor UPDATED_PROCESSOR = Processor.APPLE_M3_8CPU_8GPU;
 
-    private static final Memory DEFAULT_MEMORY = Memory.GB_16;
-    private static final Memory UPDATED_MEMORY = Memory.GB_24;
+    private static final Memory DEFAULT_MEMORY = Memory.MEMORY_16GB;
+    private static final Memory UPDATED_MEMORY = Memory.MEMORY_24GB;
 
-    private static final Storage DEFAULT_STORAGE = Storage.GB_256;
-    private static final Storage UPDATED_STORAGE = Storage.GB_512;
-
-    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
-    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
-
-    private static final String DEFAULT_FEATURE = "AAAAAAAAAA";
-    private static final String UPDATED_FEATURE = "BBBBBBBBBB";
-
-    private static final String DEFAULT_BOX_CONTENTS = "AAAAAAAAAA";
-    private static final String UPDATED_BOX_CONTENTS = "BBBBBBBBBB";
-
-    private static final String DEFAULT_WARRANTY = "AAAAAAAAAA";
-    private static final String UPDATED_WARRANTY = "BBBBBBBBBB";
+    private static final Storage DEFAULT_STORAGE = Storage.STORAGE_256GB;
+    private static final Storage UPDATED_STORAGE = Storage.STORAGE_512GB;
 
     private static final String ENTITY_API_URL = "/api/products";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -122,16 +121,15 @@ class ProductResourceIT {
         return new Product()
             .name(DEFAULT_NAME)
             .sku(DEFAULT_SKU)
-            .price(DEFAULT_PRICE)
+            .basePrice(DEFAULT_BASE_PRICE)
+            .discountPrice(DEFAULT_DISCOUNT_PRICE)
+            .discountAmount(DEFAULT_DISCOUNT_AMOUNT)
+            .discountType(DEFAULT_DISCOUNT_TYPE)
             .currency(DEFAULT_CURRENCY)
             .color(DEFAULT_COLOR)
             .processor(DEFAULT_PROCESSOR)
             .memory(DEFAULT_MEMORY)
-            .storage(DEFAULT_STORAGE)
-            .description(DEFAULT_DESCRIPTION)
-            .feature(DEFAULT_FEATURE)
-            .boxContents(DEFAULT_BOX_CONTENTS)
-            .warranty(DEFAULT_WARRANTY);
+            .storage(DEFAULT_STORAGE);
     }
 
     /**
@@ -144,16 +142,15 @@ class ProductResourceIT {
         return new Product()
             .name(UPDATED_NAME)
             .sku(UPDATED_SKU)
-            .price(UPDATED_PRICE)
+            .basePrice(UPDATED_BASE_PRICE)
+            .discountPrice(UPDATED_DISCOUNT_PRICE)
+            .discountAmount(UPDATED_DISCOUNT_AMOUNT)
+            .discountType(UPDATED_DISCOUNT_TYPE)
             .currency(UPDATED_CURRENCY)
             .color(UPDATED_COLOR)
             .processor(UPDATED_PROCESSOR)
             .memory(UPDATED_MEMORY)
-            .storage(UPDATED_STORAGE)
-            .description(UPDATED_DESCRIPTION)
-            .feature(UPDATED_FEATURE)
-            .boxContents(UPDATED_BOX_CONTENTS)
-            .warranty(UPDATED_WARRANTY);
+            .storage(UPDATED_STORAGE);
     }
 
     public static void deleteEntities(EntityManager em) {
@@ -268,10 +265,10 @@ class ProductResourceIT {
     }
 
     @Test
-    void checkPriceIsRequired() throws Exception {
+    void checkBasePriceIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        product.setPrice(null);
+        product.setBasePrice(null);
 
         // Create the Product, which fails.
         ProductDTO productDTO = productMapper.toDto(product);
@@ -415,10 +412,16 @@ class ProductResourceIT {
             .value(hasItem(DEFAULT_NAME))
             .jsonPath("$.[*].sku")
             .value(hasItem(DEFAULT_SKU))
-            .jsonPath("$.[*].price")
-            .value(hasItem(sameNumber(DEFAULT_PRICE)))
+            .jsonPath("$.[*].basePrice")
+            .value(hasItem(sameNumber(DEFAULT_BASE_PRICE)))
+            .jsonPath("$.[*].discountPrice")
+            .value(hasItem(sameNumber(DEFAULT_DISCOUNT_PRICE)))
+            .jsonPath("$.[*].discountAmount")
+            .value(hasItem(sameNumber(DEFAULT_DISCOUNT_AMOUNT)))
+            .jsonPath("$.[*].discountType")
+            .value(hasItem(DEFAULT_DISCOUNT_TYPE.toString()))
             .jsonPath("$.[*].currency")
-            .value(hasItem(DEFAULT_CURRENCY))
+            .value(hasItem(DEFAULT_CURRENCY.toString()))
             .jsonPath("$.[*].color")
             .value(hasItem(DEFAULT_COLOR.toString()))
             .jsonPath("$.[*].processor")
@@ -426,15 +429,7 @@ class ProductResourceIT {
             .jsonPath("$.[*].memory")
             .value(hasItem(DEFAULT_MEMORY.toString()))
             .jsonPath("$.[*].storage")
-            .value(hasItem(DEFAULT_STORAGE.toString()))
-            .jsonPath("$.[*].description")
-            .value(hasItem(DEFAULT_DESCRIPTION))
-            .jsonPath("$.[*].feature")
-            .value(hasItem(DEFAULT_FEATURE))
-            .jsonPath("$.[*].boxContents")
-            .value(hasItem(DEFAULT_BOX_CONTENTS))
-            .jsonPath("$.[*].warranty")
-            .value(hasItem(DEFAULT_WARRANTY));
+            .value(hasItem(DEFAULT_STORAGE.toString()));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -476,10 +471,16 @@ class ProductResourceIT {
             .value(is(DEFAULT_NAME))
             .jsonPath("$.sku")
             .value(is(DEFAULT_SKU))
-            .jsonPath("$.price")
-            .value(is(sameNumber(DEFAULT_PRICE)))
+            .jsonPath("$.basePrice")
+            .value(is(sameNumber(DEFAULT_BASE_PRICE)))
+            .jsonPath("$.discountPrice")
+            .value(is(sameNumber(DEFAULT_DISCOUNT_PRICE)))
+            .jsonPath("$.discountAmount")
+            .value(is(sameNumber(DEFAULT_DISCOUNT_AMOUNT)))
+            .jsonPath("$.discountType")
+            .value(is(DEFAULT_DISCOUNT_TYPE.toString()))
             .jsonPath("$.currency")
-            .value(is(DEFAULT_CURRENCY))
+            .value(is(DEFAULT_CURRENCY.toString()))
             .jsonPath("$.color")
             .value(is(DEFAULT_COLOR.toString()))
             .jsonPath("$.processor")
@@ -487,15 +488,7 @@ class ProductResourceIT {
             .jsonPath("$.memory")
             .value(is(DEFAULT_MEMORY.toString()))
             .jsonPath("$.storage")
-            .value(is(DEFAULT_STORAGE.toString()))
-            .jsonPath("$.description")
-            .value(is(DEFAULT_DESCRIPTION))
-            .jsonPath("$.feature")
-            .value(is(DEFAULT_FEATURE))
-            .jsonPath("$.boxContents")
-            .value(is(DEFAULT_BOX_CONTENTS))
-            .jsonPath("$.warranty")
-            .value(is(DEFAULT_WARRANTY));
+            .value(is(DEFAULT_STORAGE.toString()));
     }
 
     @Test
@@ -522,16 +515,15 @@ class ProductResourceIT {
         updatedProduct
             .name(UPDATED_NAME)
             .sku(UPDATED_SKU)
-            .price(UPDATED_PRICE)
+            .basePrice(UPDATED_BASE_PRICE)
+            .discountPrice(UPDATED_DISCOUNT_PRICE)
+            .discountAmount(UPDATED_DISCOUNT_AMOUNT)
+            .discountType(UPDATED_DISCOUNT_TYPE)
             .currency(UPDATED_CURRENCY)
             .color(UPDATED_COLOR)
             .processor(UPDATED_PROCESSOR)
             .memory(UPDATED_MEMORY)
-            .storage(UPDATED_STORAGE)
-            .description(UPDATED_DESCRIPTION)
-            .feature(UPDATED_FEATURE)
-            .boxContents(UPDATED_BOX_CONTENTS)
-            .warranty(UPDATED_WARRANTY);
+            .storage(UPDATED_STORAGE);
         ProductDTO productDTO = productMapper.toDto(updatedProduct);
 
         webTestClient
@@ -628,12 +620,10 @@ class ProductResourceIT {
         partialUpdatedProduct
             .name(UPDATED_NAME)
             .sku(UPDATED_SKU)
+            .discountPrice(UPDATED_DISCOUNT_PRICE)
             .currency(UPDATED_CURRENCY)
             .color(UPDATED_COLOR)
-            .memory(UPDATED_MEMORY)
-            .description(UPDATED_DESCRIPTION)
-            .boxContents(UPDATED_BOX_CONTENTS)
-            .warranty(UPDATED_WARRANTY);
+            .storage(UPDATED_STORAGE);
 
         webTestClient
             .patch()
@@ -664,16 +654,15 @@ class ProductResourceIT {
         partialUpdatedProduct
             .name(UPDATED_NAME)
             .sku(UPDATED_SKU)
-            .price(UPDATED_PRICE)
+            .basePrice(UPDATED_BASE_PRICE)
+            .discountPrice(UPDATED_DISCOUNT_PRICE)
+            .discountAmount(UPDATED_DISCOUNT_AMOUNT)
+            .discountType(UPDATED_DISCOUNT_TYPE)
             .currency(UPDATED_CURRENCY)
             .color(UPDATED_COLOR)
             .processor(UPDATED_PROCESSOR)
             .memory(UPDATED_MEMORY)
-            .storage(UPDATED_STORAGE)
-            .description(UPDATED_DESCRIPTION)
-            .feature(UPDATED_FEATURE)
-            .boxContents(UPDATED_BOX_CONTENTS)
-            .warranty(UPDATED_WARRANTY);
+            .storage(UPDATED_STORAGE);
 
         webTestClient
             .patch()

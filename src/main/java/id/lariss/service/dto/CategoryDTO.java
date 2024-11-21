@@ -13,7 +13,9 @@ public class CategoryDTO implements Serializable {
     private Long id;
 
     @NotNull(message = "must not be null")
-    private String name;
+    private String categoryEn;
+
+    private String categoryId;
 
     public Long getId() {
         return id;
@@ -23,12 +25,20 @@ public class CategoryDTO implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryEn() {
+        return categoryEn;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryEn(String categoryEn) {
+        this.categoryEn = categoryEn;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override
@@ -57,7 +67,8 @@ public class CategoryDTO implements Serializable {
     public String toString() {
         return "CategoryDTO{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
+            ", categoryEn='" + getCategoryEn() + "'" +
+            ", categoryId='" + getCategoryId() + "'" +
             "}";
     }
 }

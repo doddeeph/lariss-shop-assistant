@@ -89,14 +89,21 @@ export const CategoryUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('larissShopAssistantApp.category.name')}
-                id="category-name"
-                name="name"
-                data-cy="name"
+                label={translate('larissShopAssistantApp.category.categoryEn')}
+                id="category-categoryEn"
+                name="categoryEn"
+                data-cy="categoryEn"
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
                 }}
+              />
+              <ValidatedField
+                label={translate('larissShopAssistantApp.category.categoryId')}
+                id="category-categoryId"
+                name="categoryId"
+                data-cy="categoryId"
+                type="text"
               />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/category" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

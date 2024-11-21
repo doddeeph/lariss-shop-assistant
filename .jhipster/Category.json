@@ -6,9 +6,13 @@
   "dto": "mapstruct",
   "fields": [
     {
-      "fieldName": "name",
+      "fieldName": "categoryEn",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "categoryId",
+      "fieldType": "String"
     }
   ],
   "name": "Category",

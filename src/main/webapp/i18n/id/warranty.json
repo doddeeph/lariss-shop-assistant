@@ -1,0 +1,27 @@
+{
+  "larissShopAssistantApp": {
+    "warranty": {
+      "home": {
+        "title": "Warranties",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Buat Warranty baru",
+        "createOrEditLabel": "Buat atau edit Warranty",
+        "notFound": "No Warranties found"
+      },
+      "created": "Warranty dengan id {{ param }} telah dibuat",
+      "updated": "Warranty dengan id {{ param }} telah diperbaharui",
+      "deleted": "Warranty dengan id {{ param }} telah dihapus",
+      "delete": {
+        "question": "Apakah anda yakin ingin menghapus Warranty {{ id }}?"
+      },
+      "detail": {
+        "title": "Warranty"
+      },
+      "id": "ID",
+      "name": "Name",
+      "warrantyEn": "Warranty En",
+      "warrantyId": "Warranty Id",
+      "product": "Product"
+    }
+  }
+}

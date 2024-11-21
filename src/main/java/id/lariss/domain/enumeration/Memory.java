@@ -4,8 +4,8 @@ package id.lariss.domain.enumeration;
  * The Memory enumeration.
  */
 public enum Memory {
-    GB_16("16 GB"),
-    GB_24("24 GB");
+    MEMORY_16GB("16 GB"),
+    MEMORY_24GB("24 GB");
 
     private final String value;
 

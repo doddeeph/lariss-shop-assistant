@@ -1,0 +1,27 @@
+{
+  "larissShopAssistantApp": {
+    "boxContent": {
+      "home": {
+        "title": "Box Contents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Buat Box Content baru",
+        "createOrEditLabel": "Buat atau edit Box Content",
+        "notFound": "No Box Contents found"
+      },
+      "created": "Box Content dengan id {{ param }} telah dibuat",
+      "updated": "Box Content dengan id {{ param }} telah diperbaharui",
+      "deleted": "Box Content dengan id {{ param }} telah dihapus",
+      "delete": {
+        "question": "Apakah anda yakin ingin menghapus Box Content {{ id }}?"
+      },
+      "detail": {
+        "title": "Box Content"
+      },
+      "id": "ID",
+      "name": "Name",
+      "contentEn": "Content En",
+      "contentId": "Content Id",
+      "product": "Product"
+    }
+  }
+}

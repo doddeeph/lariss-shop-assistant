@@ -1,0 +1,27 @@
+{
+  "larissShopAssistantApp": {
+    "boxContent": {
+      "home": {
+        "title": "Box Contents",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Box Content",
+        "createOrEditLabel": "Create or edit a Box Content",
+        "notFound": "No Box Contents found"
+      },
+      "created": "A new Box Content is created with identifier {{ param }}",
+      "updated": "A Box Content is updated with identifier {{ param }}",
+      "deleted": "A Box Content is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Box Content {{ id }}?"
+      },
+      "detail": {
+        "title": "Box Content"
+      },
+      "id": "ID",
+      "name": "Name",
+      "contentEn": "Content En",
+      "contentId": "Content Id",
+      "product": "Product"
+    }
+  }
+}

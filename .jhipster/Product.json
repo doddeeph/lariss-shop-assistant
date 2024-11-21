@@ -16,63 +16,89 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "price",
+      "fieldName": "basePrice",
       "fieldType": "BigDecimal",
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "discountPrice",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "discountAmount",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "discountType",
+      "fieldType": "DiscountType",
+      "fieldValues": "PERCENTAGE,AMOUNT"
+    },
+    {
       "fieldName": "currency",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldType": "Currency",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "IDR,USD"
     },
     {
       "fieldName": "color",
       "fieldType": "Color",
       "fieldValidateRules": ["required"],
-      "fieldValues": "MIDNIGHT (Midnight),SPACE_GREY (Space Grey),SLIVER (Silver),STARLIGHT (Starlight)"
+      "fieldValues": "MIDNIGHT (Midnight),SPACE_GREY (Space Grey),SILVER (Silver),STARLIGHT (Starlight)"
     },
     {
       "fieldName": "processor",
       "fieldType": "Processor",
       "fieldValidateRules": ["required"],
-      "fieldValues": "APPLE_M2_CHIP (Apple M2 Chip (CPU 8-Core GPU 8-Core)),APPLE_M3_CHIP_GPU_8_CORE (Apple M3 Chip (CPU 8-Core GPU 8-Core)),APPLE_M3_CHIP_GPU_10_CORE (Apple M3 Chip (CPU 8-Core GPU 10-Core))"
+      "fieldValues": "APPLE_M2_8CPU_8GPU (Apple M2 Chip (CPU 8-Core GPU 8-Core)),APPLE_M3_8CPU_8GPU (Apple M3 Chip (CPU 8-Core GPU 8-Core)),APPLE_M3_8CPU_10GPU (Apple M3 Chip (CPU 8-Core GPU 10-Core))"
     },
     {
       "fieldName": "memory",
       "fieldType": "Memory",
       "fieldValidateRules": ["required"],
-      "fieldValues": "GB_16 (16 GB),GB_24 (24 GB)"
+      "fieldValues": "MEMORY_16GB (16 GB),MEMORY_24GB (24 GB)"
     },
     {
       "fieldName": "storage",
       "fieldType": "Storage",
       "fieldValidateRules": ["required"],
-      "fieldValues": "GB_256 (256 GB),GB_512 (512 GB)"
-    },
-    {
-      "fieldName": "description",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "feature",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "boxContents",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "warranty",
-      "fieldType": "String"
+      "fieldValues": "STORAGE_256GB (256 GB),STORAGE_512GB (512 GB)"
     }
   ],
   "name": "Product",
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityField": "name",
+      "otherEntityField": "categoryEn",
       "otherEntityName": "category",
       "relationshipName": "category",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "description",
+      "relationshipName": "description",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "feature",
+      "relationshipName": "feature",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "boxContent",
+      "relationshipName": "boxContent",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "warranty",
+      "relationshipName": "warranty",
       "relationshipSide": "right",
       "relationshipType": "many-to-one"
     }

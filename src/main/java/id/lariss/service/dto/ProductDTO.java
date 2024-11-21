@@ -1,6 +1,8 @@
 package id.lariss.service.dto;
 
 import id.lariss.domain.enumeration.Color;
+import id.lariss.domain.enumeration.Currency;
+import id.lariss.domain.enumeration.DiscountType;
 import id.lariss.domain.enumeration.Memory;
 import id.lariss.domain.enumeration.Processor;
 import id.lariss.domain.enumeration.Storage;
@@ -24,10 +26,16 @@ public class ProductDTO implements Serializable {
     private String sku;
 
     @NotNull(message = "must not be null")
-    private BigDecimal price;
+    private BigDecimal basePrice;
+
+    private BigDecimal discountPrice;
+
+    private BigDecimal discountAmount;
+
+    private DiscountType discountType;
 
     @NotNull(message = "must not be null")
-    private String currency;
+    private Currency currency;
 
     @NotNull(message = "must not be null")
     private Color color;
@@ -41,15 +49,15 @@ public class ProductDTO implements Serializable {
     @NotNull(message = "must not be null")
     private Storage storage;
 
-    private String description;
-
-    private String feature;
-
-    private String boxContents;
-
-    private String warranty;
-
     private CategoryDTO category;
+
+    private DescriptionDTO description;
+
+    private FeatureDTO feature;
+
+    private BoxContentDTO boxContent;
+
+    private WarrantyDTO warranty;
 
     public Long getId() {
         return id;
@@ -75,19 +83,43 @@ public class ProductDTO implements Serializable {
         this.sku = sku;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getBasePrice() {
+        return basePrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
     }
 
-    public String getCurrency() {
+    public BigDecimal getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(BigDecimal discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
+    }
+
+    public DiscountType getDiscountType() {
+        return discountType;
+    }
+
+    public void setDiscountType(DiscountType discountType) {
+        this.discountType = discountType;
+    }
+
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
@@ -123,44 +155,44 @@ public class ProductDTO implements Serializable {
         this.storage = storage;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getFeature() {
-        return feature;
-    }
-
-    public void setFeature(String feature) {
-        this.feature = feature;
-    }
-
-    public String getBoxContents() {
-        return boxContents;
-    }
-
-    public void setBoxContents(String boxContents) {
-        this.boxContents = boxContents;
-    }
-
-    public String getWarranty() {
-        return warranty;
-    }
-
-    public void setWarranty(String warranty) {
-        this.warranty = warranty;
-    }
-
     public CategoryDTO getCategory() {
         return category;
     }
 
     public void setCategory(CategoryDTO category) {
         this.category = category;
+    }
+
+    public DescriptionDTO getDescription() {
+        return description;
+    }
+
+    public void setDescription(DescriptionDTO description) {
+        this.description = description;
+    }
+
+    public FeatureDTO getFeature() {
+        return feature;
+    }
+
+    public void setFeature(FeatureDTO feature) {
+        this.feature = feature;
+    }
+
+    public BoxContentDTO getBoxContent() {
+        return boxContent;
+    }
+
+    public void setBoxContent(BoxContentDTO boxContent) {
+        this.boxContent = boxContent;
+    }
+
+    public WarrantyDTO getWarranty() {
+        return warranty;
+    }
+
+    public void setWarranty(WarrantyDTO warranty) {
+        this.warranty = warranty;
     }
 
     @Override
@@ -191,17 +223,20 @@ public class ProductDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", sku='" + getSku() + "'" +
-            ", price=" + getPrice() +
+            ", basePrice=" + getBasePrice() +
+            ", discountPrice=" + getDiscountPrice() +
+            ", discountAmount=" + getDiscountAmount() +
+            ", discountType='" + getDiscountType() + "'" +
             ", currency='" + getCurrency() + "'" +
             ", color='" + getColor() + "'" +
             ", processor='" + getProcessor() + "'" +
             ", memory='" + getMemory() + "'" +
             ", storage='" + getStorage() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", feature='" + getFeature() + "'" +
-            ", boxContents='" + getBoxContents() + "'" +
-            ", warranty='" + getWarranty() + "'" +
             ", category=" + getCategory() +
+            ", description=" + getDescription() +
+            ", feature=" + getFeature() +
+            ", boxContent=" + getBoxContent() +
+            ", warranty=" + getWarranty() +
             "}";
     }
 }

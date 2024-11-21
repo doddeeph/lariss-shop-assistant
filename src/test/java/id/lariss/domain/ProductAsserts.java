@@ -50,16 +50,27 @@ public class ProductAsserts {
             .as("Verify Product relevant properties")
             .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
             .satisfies(e -> assertThat(e.getSku()).as("check sku").isEqualTo(actual.getSku()))
-            .satisfies(e -> assertThat(e.getPrice()).as("check price").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getPrice()))
+            .satisfies(e ->
+                assertThat(e.getBasePrice()).as("check basePrice").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getBasePrice())
+            )
+            .satisfies(e ->
+                assertThat(e.getDiscountPrice())
+                    .as("check discountPrice")
+                    .usingComparator(bigDecimalCompareTo)
+                    .isEqualTo(actual.getDiscountPrice())
+            )
+            .satisfies(e ->
+                assertThat(e.getDiscountAmount())
+                    .as("check discountAmount")
+                    .usingComparator(bigDecimalCompareTo)
+                    .isEqualTo(actual.getDiscountAmount())
+            )
+            .satisfies(e -> assertThat(e.getDiscountType()).as("check discountType").isEqualTo(actual.getDiscountType()))
             .satisfies(e -> assertThat(e.getCurrency()).as("check currency").isEqualTo(actual.getCurrency()))
             .satisfies(e -> assertThat(e.getColor()).as("check color").isEqualTo(actual.getColor()))
             .satisfies(e -> assertThat(e.getProcessor()).as("check processor").isEqualTo(actual.getProcessor()))
             .satisfies(e -> assertThat(e.getMemory()).as("check memory").isEqualTo(actual.getMemory()))
-            .satisfies(e -> assertThat(e.getStorage()).as("check storage").isEqualTo(actual.getStorage()))
-            .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
-            .satisfies(e -> assertThat(e.getFeature()).as("check feature").isEqualTo(actual.getFeature()))
-            .satisfies(e -> assertThat(e.getBoxContents()).as("check boxContents").isEqualTo(actual.getBoxContents()))
-            .satisfies(e -> assertThat(e.getWarranty()).as("check warranty").isEqualTo(actual.getWarranty()));
+            .satisfies(e -> assertThat(e.getStorage()).as("check storage").isEqualTo(actual.getStorage()));
     }
 
     /**
@@ -71,6 +82,10 @@ public class ProductAsserts {
     public static void assertProductUpdatableRelationshipsEquals(Product expected, Product actual) {
         assertThat(expected)
             .as("Verify Product relationships")
-            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()));
+            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
+            .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
+            .satisfies(e -> assertThat(e.getFeature()).as("check feature").isEqualTo(actual.getFeature()))
+            .satisfies(e -> assertThat(e.getBoxContent()).as("check boxContent").isEqualTo(actual.getBoxContent()))
+            .satisfies(e -> assertThat(e.getWarranty()).as("check warranty").isEqualTo(actual.getWarranty()));
     }
 }

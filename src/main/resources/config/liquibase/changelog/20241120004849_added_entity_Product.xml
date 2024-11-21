@@ -20,8 +20,17 @@
             <column name="sku" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="price" type="decimal(21,2)">
+            <column name="base_price" type="decimal(21,2)">
                 <constraints nullable="false" />
+            </column>
+            <column name="discount_price" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="discount_amount" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="discount_type" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
             <column name="currency" type="varchar(255)">
                 <constraints nullable="false" />
@@ -38,19 +47,19 @@
             <column name="storage" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="description" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="feature" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="box_contents" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="warranty" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="category_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="description_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="feature_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="box_content_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="warranty_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -70,22 +79,25 @@
     <changeSet id="20241120004849-1-data" author="jhipster" context="faker">
         <loadData
                   file="config/liquibase/fake-data/product.csv"
-                  separator=";"
                   tableName="product"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <column name="sku" type="string"/>
-            <column name="price" type="numeric"/>
+            <column name="base_price" type="numeric"/>
+            <column name="discount_price" type="numeric"/>
+            <column name="discount_amount" type="numeric"/>
+            <column name="discount_type" type="string"/>
             <column name="currency" type="string"/>
             <column name="color" type="string"/>
             <column name="processor" type="string"/>
             <column name="memory" type="string"/>
             <column name="storage" type="string"/>
-            <column name="description" type="string"/>
-            <column name="feature" type="string"/>
-            <column name="box_contents" type="string"/>
-            <column name="warranty" type="string"/>
+            <column name="category_id" type="numeric"/>
+            <column name="description_id" type="numeric"/>
+            <column name="feature_id" type="numeric"/>
+            <column name="box_content_id" type="numeric"/>
+            <column name="warranty_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

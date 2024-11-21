@@ -11,7 +11,8 @@ public class CategorySqlHelper {
     public static List<Expression> getColumns(Table table, String columnPrefix) {
         List<Expression> columns = new ArrayList<>();
         columns.add(Column.aliased("id", table, columnPrefix + "_id"));
-        columns.add(Column.aliased("name", table, columnPrefix + "_name"));
+        columns.add(Column.aliased("category_en", table, columnPrefix + "_category_en"));
+        columns.add(Column.aliased("category_id", table, columnPrefix + "_category_id"));
 
         return columns;
     }

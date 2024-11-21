@@ -9,7 +9,11 @@
         "main": "Entitas",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
         "category": "Category",
-        "product": "Product"
+        "product": "Product",
+        "description": "Description",
+        "feature": "Feature",
+        "boxContent": "Box Content",
+        "warranty": "Warranty"
       },
       "account": {
         "main": "Akun",
