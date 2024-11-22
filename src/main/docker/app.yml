@@ -9,6 +9,7 @@ services:
       - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgresql:5432/larissShopAssistant
       - SPRING_LIQUIBASE_URL=jdbc:postgresql://postgresql:5432/larissShopAssistant
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     ports:
       - 127.0.0.1:8081:8081
     healthcheck:

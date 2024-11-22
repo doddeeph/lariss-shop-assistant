@@ -66,6 +66,14 @@ public interface ProductRepository extends ReactiveCrudRepository<Product, Long>
 
     @Override
     Mono<Void> deleteById(Long id);
+
+    @Query(
+        "SELECT * FROM product p " +
+        "LEFT JOIN category c ON c.id = p.category_id " +
+        "WHERE c.category_en ILIKE CONCAT('%', :category, '%') " +
+        "OR CAST(c.category_id AS TEXT) ILIKE CONCAT('%', :category, '%')"
+    )
+    Flux<Product> findByCategory(String category);
 }
 
 interface ProductRepositoryInternal {

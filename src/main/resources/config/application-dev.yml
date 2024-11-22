@@ -21,6 +21,12 @@ logging:
     id.lariss: DEBUG
 
 spring:
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+    chat:
+      options:
+        model: gpt-4o-mini
   devtools:
     restart:
       enabled: true

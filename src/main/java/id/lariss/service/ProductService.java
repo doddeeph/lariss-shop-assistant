@@ -1,5 +1,6 @@
 package id.lariss.service;
 
+import id.lariss.config.ProductFunctionConfiguration.ProductDetails;
 import id.lariss.service.dto.ProductDTO;
 import org.springframework.data.domain.Pageable;
 import reactor.core.publisher.Flux;
@@ -71,4 +72,6 @@ public interface ProductService {
      * @return a Mono to signal the deletion
      */
     Mono<Void> delete(Long id);
+
+    Mono<ProductDetails> findByCategory(String category);
 }
