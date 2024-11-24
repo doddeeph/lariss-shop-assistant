@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/public")
+@RequestMapping("/api/public/twilio")
 public class TwilioResource {
 
     private final TwilioService twilioService;
