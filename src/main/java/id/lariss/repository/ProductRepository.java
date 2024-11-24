@@ -41,6 +41,8 @@ public interface ProductRepository extends ReactiveCrudRepository<Product, Long>
 
     @Override
     Mono<Void> deleteById(Long id);
+
+    Flux<Product> findByNameContainingIgnoreCase(String name);
 }
 
 interface ProductRepositoryInternal {

@@ -84,4 +84,10 @@ public class ProductServiceImpl implements ProductService {
         LOG.debug("Request to delete Product : {}", id);
         return productRepository.deleteById(id);
     }
+
+    @Override
+    public Flux<ProductDTO> findByName(String name) {
+        LOG.debug("Request to get Product by Name: {}", name);
+        return productRepository.findByNameContainingIgnoreCase(name).map(productMapper::toDto);
+    }
 }

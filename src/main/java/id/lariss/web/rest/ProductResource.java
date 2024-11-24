@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,7 @@ import tech.jhipster.web.util.reactive.ResponseUtil;
  * REST controller for managing {@link id.lariss.domain.Product}.
  */
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api")
 public class ProductResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductResource.class);
@@ -57,7 +58,7 @@ public class ProductResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new productDTO, or with status {@code 400 (Bad Request)} if the product has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("")
+    @PostMapping("/products")
     public Mono<ResponseEntity<ProductDTO>> createProduct(@Valid @RequestBody ProductDTO productDTO) throws URISyntaxException {
         LOG.debug("REST request to save Product : {}", productDTO);
         if (productDTO.getId() != null) {
@@ -86,7 +87,7 @@ public class ProductResource {
      * or with status {@code 500 (Internal Server Error)} if the productDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/{id}")
+    @PutMapping("/products/{id}")
     public Mono<ResponseEntity<ProductDTO>> updateProduct(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody ProductDTO productDTO
@@ -128,7 +129,7 @@ public class ProductResource {
      * or with status {@code 500 (Internal Server Error)} if the productDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/products/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public Mono<ResponseEntity<ProductDTO>> partialUpdateProduct(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody ProductDTO productDTO
@@ -168,7 +169,7 @@ public class ProductResource {
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of products in body.
      */
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<List<ProductDTO>>> getAllProducts(
         @org.springdoc.core.annotations.ParameterObject Pageable pageable,
         ServerHttpRequest request,
@@ -196,7 +197,7 @@ public class ProductResource {
      * @param id the id of the productDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the productDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/{id}")
+    @GetMapping("/products/{id}")
     public Mono<ResponseEntity<ProductDTO>> getProduct(@PathVariable("id") Long id) {
         LOG.debug("REST request to get Product : {}", id);
         Mono<ProductDTO> productDTO = productService.findOne(id);
@@ -209,7 +210,7 @@ public class ProductResource {
      * @param id the id of the productDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/products/{id}")
     public Mono<ResponseEntity<Void>> deleteProduct(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Product : {}", id);
         return productService
@@ -221,5 +222,45 @@ public class ProductResource {
                         .build()
                 )
             );
+    }
+
+    @GetMapping(value = "/public/products", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<ResponseEntity<List<ProductDTO>>> getAllPublicProducts(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        ServerHttpRequest request,
+        @RequestParam(required = false) String name
+    ) {
+        return Mono.defer(() -> {
+            if (StringUtils.isBlank(name)) {
+                LOG.debug("REST request to get a page of Products");
+                return productService
+                    .countAll()
+                    .zipWith(productService.findAll(pageable).collectList())
+                    .map(countWithEntities ->
+                        ResponseEntity.ok()
+                            .headers(
+                                PaginationUtil.generatePaginationHttpHeaders(
+                                    ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                                    new PageImpl<>(countWithEntities.getT2(), pageable, countWithEntities.getT1())
+                                )
+                            )
+                            .body(countWithEntities.getT2())
+                    );
+            }
+            LOG.debug("REST request to get Product by name: {}", name);
+            return productService
+                .findByName(name)
+                .collectList()
+                .map(entities ->
+                    ResponseEntity.ok()
+                        .headers(
+                            PaginationUtil.generatePaginationHttpHeaders(
+                                ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                                new PageImpl<>(entities, pageable, entities.size())
+                            )
+                        )
+                        .body(entities)
+                );
+        });
     }
 }

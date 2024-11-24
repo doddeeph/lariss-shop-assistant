@@ -71,4 +71,6 @@ public interface ProductService {
      * @return a Mono to signal the deletion
      */
     Mono<Void> delete(Long id);
+
+    Flux<ProductDTO> findByName(String name);
 }
