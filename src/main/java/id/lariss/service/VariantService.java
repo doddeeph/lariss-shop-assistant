@@ -71,4 +71,6 @@ public interface VariantService {
      * @return a Mono to signal the deletion
      */
     Mono<Void> delete(Long id);
+
+    Flux<VariantDTO> findAllByProductName(String productName, Pageable pageable);
 }

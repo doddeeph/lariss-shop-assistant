@@ -14,14 +14,8 @@ import org.springframework.data.r2dbc.convert.R2dbcConverter;
 import org.springframework.data.r2dbc.core.R2dbcEntityOperations;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.r2dbc.repository.support.SimpleR2dbcRepository;
-import org.springframework.data.relational.core.sql.Column;
-import org.springframework.data.relational.core.sql.Comparison;
-import org.springframework.data.relational.core.sql.Condition;
-import org.springframework.data.relational.core.sql.Conditions;
-import org.springframework.data.relational.core.sql.Expression;
-import org.springframework.data.relational.core.sql.Select;
+import org.springframework.data.relational.core.sql.*;
 import org.springframework.data.relational.core.sql.SelectBuilder.SelectFromAndJoinCondition;
-import org.springframework.data.relational.core.sql.Table;
 import org.springframework.data.relational.repository.support.MappingRelationalEntityInformation;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.r2dbc.core.RowsFetchSpec;
@@ -131,6 +125,58 @@ class VariantRepositoryInternalImpl extends SimpleR2dbcRepository<Variant, Long>
     @Override
     public Flux<Variant> findAllWithEagerRelationships(Pageable page) {
         return findAllBy(page);
+    }
+
+    @Override
+    public Flux<Variant> findAllByProductName(String productName, Pageable pageable) {
+        Table productVariantTable = Table.aliased("rel_product__variant", "pv");
+        Table productTable = Table.aliased("product", "product");
+
+        List<Expression> columns = VariantSqlHelper.getColumns(entityTable, EntityManager.ENTITY_ALIAS);
+        columns.addAll(ColorSqlHelper.getColumns(colorTable, "color"));
+        columns.addAll(ProcessorSqlHelper.getColumns(processorTable, "processor"));
+        columns.addAll(MemorySqlHelper.getColumns(memoryTable, "memory"));
+        columns.addAll(StorageSqlHelper.getColumns(storageTable, "storage"));
+
+        SelectFromAndJoinCondition selectFrom = Select.builder()
+            .select(columns)
+            .from(entityTable)
+            .leftOuterJoin(productVariantTable)
+            .on(Column.create("id", entityTable))
+            .equals(Column.create("variant_id", productVariantTable))
+            .leftOuterJoin(colorTable)
+            .on(Column.create("id", colorTable))
+            .equals(Column.create("color_id", entityTable))
+            .leftOuterJoin(processorTable)
+            .on(Column.create("id", processorTable))
+            .equals(Column.create("processor_id", entityTable))
+            .leftOuterJoin(memoryTable)
+            .on(Column.create("id", memoryTable))
+            .equals(Column.create("memory_id", entityTable))
+            .leftOuterJoin(storageTable)
+            .on(Column.create("id", storageTable))
+            .equals(Column.create("storage_id", entityTable))
+            .leftOuterJoin(productTable)
+            .on(Column.create("id", productTable))
+            .equals(Column.create("product_id", productVariantTable));
+
+        Condition whereClause = Conditions.just(
+            "LOWER(" + productTable.column("name").getName() + ") LIKE " + SQL.literalOf('%' + productName.toLowerCase() + '%')
+        );
+        //        Condition whereClause = Conditions.like(productTable.column("name"), SQL.literalOf('%' + productName + '%'));
+        String select = entityManager.createSelect(selectFrom, Variant.class, pageable, whereClause);
+
+        return db
+            .sql(select)
+            .map((row, rowMetadata) -> {
+                Variant entity = variantMapper.apply(row, "e");
+                entity.setColor(colorMapper.apply(row, "color"));
+                entity.setProcessor(processorMapper.apply(row, "processor"));
+                entity.setMemory(memoryMapper.apply(row, "memory"));
+                entity.setStorage(storageMapper.apply(row, "storage"));
+                return entity;
+            })
+            .all();
     }
 
     private Variant process(Row row, RowMetadata metadata) {

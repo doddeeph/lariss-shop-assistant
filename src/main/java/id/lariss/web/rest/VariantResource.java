@@ -29,7 +29,7 @@ import tech.jhipster.web.util.reactive.ResponseUtil;
  * REST controller for managing {@link id.lariss.domain.Variant}.
  */
 @RestController
-@RequestMapping("/api/variants")
+@RequestMapping("/api")
 public class VariantResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(VariantResource.class);
@@ -55,7 +55,7 @@ public class VariantResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new variantDTO, or with status {@code 400 (Bad Request)} if the variant has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("")
+    @PostMapping("/variants")
     public Mono<ResponseEntity<VariantDTO>> createVariant(@RequestBody VariantDTO variantDTO) throws URISyntaxException {
         LOG.debug("REST request to save Variant : {}", variantDTO);
         if (variantDTO.getId() != null) {
@@ -84,7 +84,7 @@ public class VariantResource {
      * or with status {@code 500 (Internal Server Error)} if the variantDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/{id}")
+    @PutMapping("/variants/{id}")
     public Mono<ResponseEntity<VariantDTO>> updateVariant(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody VariantDTO variantDTO
@@ -126,7 +126,7 @@ public class VariantResource {
      * or with status {@code 500 (Internal Server Error)} if the variantDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/variants/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public Mono<ResponseEntity<VariantDTO>> partialUpdateVariant(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody VariantDTO variantDTO
@@ -166,7 +166,7 @@ public class VariantResource {
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of variants in body.
      */
-    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/variants", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<List<VariantDTO>>> getAllVariants(
         @org.springdoc.core.annotations.ParameterObject Pageable pageable,
         ServerHttpRequest request,
@@ -194,7 +194,7 @@ public class VariantResource {
      * @param id the id of the variantDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the variantDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/{id}")
+    @GetMapping("/variants/{id}")
     public Mono<ResponseEntity<VariantDTO>> getVariant(@PathVariable("id") Long id) {
         LOG.debug("REST request to get Variant : {}", id);
         Mono<VariantDTO> variantDTO = variantService.findOne(id);
@@ -207,7 +207,7 @@ public class VariantResource {
      * @param id the id of the variantDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/variants/{id}")
     public Mono<ResponseEntity<Void>> deleteVariant(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete Variant : {}", id);
         return variantService
@@ -218,6 +218,28 @@ public class VariantResource {
                         .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
                         .build()
                 )
+            );
+    }
+
+    @GetMapping(value = "/public/variants", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<ResponseEntity<List<VariantDTO>>> getAllPublicVariants(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        ServerHttpRequest request,
+        @RequestParam String productName
+    ) {
+        LOG.debug("REST request to get Variants by product name: {}", productName);
+        return variantService
+            .findAllByProductName(productName, pageable)
+            .collectList()
+            .map(entities ->
+                ResponseEntity.ok()
+                    .headers(
+                        PaginationUtil.generatePaginationHttpHeaders(
+                            ForwardedHeaderUtils.adaptFromForwardedHeaders(request.getURI(), request.getHeaders()),
+                            new PageImpl<>(entities, pageable, entities.size())
+                        )
+                    )
+                    .body(entities)
             );
     }
 }

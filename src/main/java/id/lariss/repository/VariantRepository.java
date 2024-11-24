@@ -60,6 +60,9 @@ public interface VariantRepository extends ReactiveCrudRepository<Variant, Long>
 
     @Override
     Mono<Void> deleteById(Long id);
+
+    @Override
+    Flux<Variant> findAllByProductName(String productName, Pageable pageable);
 }
 
 interface VariantRepositoryInternal {
@@ -80,4 +83,6 @@ interface VariantRepositoryInternal {
     Flux<Variant> findAllWithEagerRelationships(Pageable page);
 
     Mono<Void> deleteById(Long id);
+
+    Flux<Variant> findAllByProductName(String productName, Pageable pageable);
 }

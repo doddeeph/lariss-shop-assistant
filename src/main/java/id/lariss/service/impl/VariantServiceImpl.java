@@ -84,4 +84,10 @@ public class VariantServiceImpl implements VariantService {
         LOG.debug("Request to delete Variant : {}", id);
         return variantRepository.deleteById(id);
     }
+
+    @Override
+    public Flux<VariantDTO> findAllByProductName(String productName, Pageable pageable) {
+        LOG.debug("Request to get all Variants by product: {}", productName);
+        return variantRepository.findAllByProductName(productName, pageable).map(variantMapper::toDto);
+    }
 }
