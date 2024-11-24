@@ -98,3 +98,7 @@ jhipster:
 # ===================================================================
 
 # application:
+flowiseai:
+  api:
+    prediction:
+      id: ${FLOWISEAI_API_PREDICTION_ID}
