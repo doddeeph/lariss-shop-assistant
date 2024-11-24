@@ -3,6 +3,8 @@ package id.lariss.web.rest;
 import id.lariss.service.TwilioService;
 import id.lariss.service.dto.twilio.WebhookRequestForm;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,8 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/public/twilio")
 public class TwilioResource {
+
+    private static final Logger LOG = LoggerFactory.getLogger(TwilioResource.class);
 
     private final TwilioService twilioService;
 
@@ -27,6 +31,9 @@ public class TwilioResource {
         @RequestHeader Map<String, String> requestHeader,
         WebhookRequestForm requestForm
     ) {
-        return twilioService.webhook(request, requestHeader, requestForm);
+        return Mono.defer(() -> {
+            LOG.debug("Twilio Webhook incoming request ->  requestHeader: {}, requestForm: {}", requestHeader, requestForm);
+            return twilioService.webhook(request, requestHeader, requestForm);
+        });
     }
 }

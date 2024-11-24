@@ -39,20 +39,23 @@ public class FlowiseAiServiceImpl implements FlowiseAiService {
 
     @Override
     public Mono<String> prediction(String question) {
-        return webClient
-            .post()
-            .uri("/api/v1/prediction/" + predictionId)
-            .bodyValue(buildFlowiseAiRequest(question))
-            .retrieve()
-            .onStatus(HttpStatusCode::is4xxClientError, response ->
-                response.bodyToMono(String.class).flatMap(s -> Mono.error(new RuntimeException("Client error " + s)))
-            )
-            .onStatus(HttpStatusCode::is5xxServerError, response ->
-                response.bodyToMono(String.class).flatMap(s -> Mono.error(new RuntimeException("Server error " + s)))
-            )
-            .bodyToMono(FlowiseAiResponse.class)
-            .map(FlowiseAiResponse::getText)
-            .doOnError(WebClientResponseException.class, e -> LOG.error("Error occurred: {}", e.getResponseBodyAsString()));
+        return Mono.defer(() -> {
+            LOG.debug("Flowise AI prediction -> question: {}, predictionId: {}", question, predictionId);
+            return webClient
+                .post()
+                .uri("/api/v1/prediction/" + predictionId)
+                .bodyValue(buildFlowiseAiRequest(question))
+                .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError, response ->
+                    response.bodyToMono(String.class).flatMap(s -> Mono.error(new RuntimeException("Client error " + s)))
+                )
+                .onStatus(HttpStatusCode::is5xxServerError, response ->
+                    response.bodyToMono(String.class).flatMap(s -> Mono.error(new RuntimeException("Server error " + s)))
+                )
+                .bodyToMono(FlowiseAiResponse.class)
+                .map(FlowiseAiResponse::getText)
+                .doOnError(WebClientResponseException.class, e -> LOG.error("Error occurred: {}", e.getResponseBodyAsString()));
+        });
     }
 
     private FlowiseAiRequest buildFlowiseAiRequest(String question) {
