@@ -1,0 +1,55 @@
+
+entity Product {
+  name String required
+  sku String required
+  price BigDecimal required
+  specialPrice BigDecimal required
+  quantity Integer required
+  thumbnail String required
+}
+
+entity Variant {
+  label String
+  sku String
+}
+
+entity Color {
+  attributeLabel String
+  attributeName String
+  optionLabel String
+  optionValue String
+}
+
+entity Processor {
+  attributeLabel String
+  attributeName String
+  optionLabel String
+  optionValue String
+}
+
+entity Memory {
+  attributeLabel String
+  attributeName String
+  optionLabel String
+  optionValue String
+}
+
+entity Storage {
+  attributeLabel String
+  attributeName String
+  optionLabel String
+  optionValue String
+}
+
+relationship OneToMany {
+  Color to Variant{color(optionLabel)}
+  Processor to Variant{processor(optionLabel)}
+  Memory to Variant{memory(optionLabel)}
+  Storage to Variant{storage(optionLabel)}
+}
+
+relationship ManyToMany {
+  Product{variant(sku)} to Variant{product(name)}
+}
+
+use mapstruct, serviceImpl, pagination for all

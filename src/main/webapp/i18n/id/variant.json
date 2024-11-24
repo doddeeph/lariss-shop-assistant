@@ -1,0 +1,30 @@
+{
+  "larissShopAssistantApp": {
+    "variant": {
+      "home": {
+        "title": "Variants",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Buat Variant baru",
+        "createOrEditLabel": "Buat atau edit Variant",
+        "notFound": "No Variants found"
+      },
+      "created": "Variant dengan id {{ param }} telah dibuat",
+      "updated": "Variant dengan id {{ param }} telah diperbaharui",
+      "deleted": "Variant dengan id {{ param }} telah dihapus",
+      "delete": {
+        "question": "Apakah anda yakin ingin menghapus Variant {{ id }}?"
+      },
+      "detail": {
+        "title": "Variant"
+      },
+      "id": "ID",
+      "label": "Label",
+      "sku": "Sku",
+      "color": "Color",
+      "processor": "Processor",
+      "memory": "Memory",
+      "storage": "Storage",
+      "product": "Product"
+    }
+  }
+}

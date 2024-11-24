@@ -1,0 +1,38 @@
+{
+  "annotations": {
+    "changelogDate": "20241124005721"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "attributeLabel",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "attributeName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "optionLabel",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "optionValue",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Color",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "variant",
+      "otherEntityRelationshipName": "color",
+      "relationshipName": "variant",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

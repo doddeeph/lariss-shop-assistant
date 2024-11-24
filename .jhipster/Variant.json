@@ -1,0 +1,59 @@
+{
+  "annotations": {
+    "changelogDate": "20241124005720"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "label",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sku",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Variant",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "optionLabel",
+      "otherEntityName": "color",
+      "relationshipName": "color",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "optionLabel",
+      "otherEntityName": "processor",
+      "relationshipName": "processor",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "optionLabel",
+      "otherEntityName": "memory",
+      "relationshipName": "memory",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "optionLabel",
+      "otherEntityName": "storage",
+      "relationshipName": "storage",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "variant",
+      "relationshipName": "product",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

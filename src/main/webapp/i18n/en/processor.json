@@ -1,0 +1,28 @@
+{
+  "larissShopAssistantApp": {
+    "processor": {
+      "home": {
+        "title": "Processors",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Processor",
+        "createOrEditLabel": "Create or edit a Processor",
+        "notFound": "No Processors found"
+      },
+      "created": "A new Processor is created with identifier {{ param }}",
+      "updated": "A Processor is updated with identifier {{ param }}",
+      "deleted": "A Processor is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Processor {{ id }}?"
+      },
+      "detail": {
+        "title": "Processor"
+      },
+      "id": "ID",
+      "attributeLabel": "Attribute Label",
+      "attributeName": "Attribute Name",
+      "optionLabel": "Option Label",
+      "optionValue": "Option Value",
+      "variant": "Variant"
+    }
+  }
+}
